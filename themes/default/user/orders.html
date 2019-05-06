@@ -1,0 +1,289 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<style>
+    .top-tabs-wrapper{
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        /*-webkit-box-shadow: inset 0px 1px 4px #cccccc;*/
+        /*-moz-box-shadow: inset 0px 1px 4px #cccccc;*/
+        /*box-shadow: inset 0px 1px 4px #cccccc;*/
+        background-color: #ffffff;
+        font-size: 0;
+    }
+    .top-tabs-wrapper .tab{
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+        height: 100%;
+        text-align: center;
+        font-size: 1rem;
+        color: #333333;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+    }
+    .top-tabs-wrapper .act{
+        position: relative;
+    }
+    .top-tabs-wrapper .act::after{
+        display: block;
+        margin-left: -12px;
+        content: '';
+        width: 24px;
+        height: 6px;
+        background-color: #007aff;
+        position: absolute;
+        left: 50%;
+        bottom: 2px;
+    }
+
+    /*左侧标题和日期*/
+    .title-date-wrapper .title{
+        height: 1.4rem;
+        line-height: 1.4rem;
+    }
+    .title-date-wrapper .date{
+        height: 1.2rem;
+        line-height: 1.2rem;
+    }
+    /*认证按钮*/
+    .amount-button-wrapper{
+        display: inline-block;
+        width: 36%;
+        text-align: right;
+        vertical-align: middle;
+    }
+    .amount-button-wrapper .amount{
+        width: 100%;
+    }
+    .amount-button-wrapper button{
+        padding: 0 4px;
+        font-size: .8rem;
+    }
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+    <div class="top-tabs-wrapper">
+        <div class="tab act" data-currentid="1">待审核</div>
+        <div class="tab" data-currentid="2">已通过</div>
+        <div class="tab" data-currentid="3">未通过</div>
+        <div class="tab" data-currentid="5">保单生效</div>
+    </div>
+    <div class="main-list-wrapper" id="list-wrapper">
+        <!--<div class="auditing-list current-0">-->
+        <!--<ul class="mui-table-view">-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待审核</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待审核</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待审核</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="audited-list current-1">-->
+        <!--<ul class="mui-table-view">-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待放款</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待放款</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">待放款</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="not-pass-list current-2">-->
+        <!--<ul class="mui-table-view">-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">未通过</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">未通过</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--<li class="mui-table-view-cell list-row">-->
+        <!--<div class="title-date-wrapper">-->
+        <!--<div class="title">未通过</div>-->
+        <!--<div class="date">2019-01-25 15:28:20</div>-->
+        <!--</div>-->
+        <!--<div class="amount">￥100.00</div>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <div class="passed-list current-3">
+            <ul class="mui-table-view" id="list_wrapper">
+
+            </ul>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__STATIC__/js/jQuery/jquery.tmpl.min.js"></script>
+
+<script type="text/x-jquery-tmpl" id="list_item">
+    <li class="mui-table-view-cell list-row">
+        <div class="title-date-wrapper">
+            <div class="title">${status_txt}</div>
+            <div class="date">${update_time}</div>
+        </div>
+        <div class="amount-button-wrapper">
+            <div class="amount">￥${premium}</div>
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-outlined authenticate-btn" data-id="${id}">认证</button>
+        </div>
+    </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="list_item_1">
+    <li class="mui-table-view-cell list-row">
+        <div class="title-date-wrapper">
+            <div class="title">${status_txt}</div>
+            <div class="date">${update_time}</div>
+        </div>
+        <div class="amount">￥${premium}</div>
+    </li>
+</script>
+
+<script>
+    var current_tab = 1;   //选项卡的下标（1：待审核；2：已通过；3：未通过；5：保单生效）
+
+    /*let test_data = [
+        [{
+            title: '待审核',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '待审核',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '待审核',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        }],
+        [{
+            title: '待放款',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '待放款',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '待放款',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        }],
+        [{
+            title: '未通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '未通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '未通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        }],
+        [{
+            title: '已通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '已通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        },{
+            title: '已通过',
+            date: '2019-01-26 17:09:00',
+            amount: '100.00'
+        }],
+    ];*/
+    jq('.tab').on('tap',function () {
+        jq(this.parentElement).find('.act').removeClass('act');
+        jq(this).addClass('act');
+        current_tab = jq(this).attr('data-currentid');
+        // jq('#list-wrapper').children().attr('hidden',true);
+        // jq('#list-wrapper').find('.current-' + current_tab).attr('hidden',false);
+        jq('#list_wrapper').empty();
+
+        jq.get('/user/orders', {status:current_tab}, function (res) {
+            if (res.code) {
+                tmplList(res.data);
+                return;
+            }
+        });
+    });
+
+    jq.get('/user/orders', {status:current_tab}, function (res) {
+        if (res.code) {
+            tmplList(res.data);
+            return;
+        }
+    });
+
+    //根据数据（data)渲染到列表上
+    function tmplList(data) {
+        if(current_tab == 2){
+            jq("#list_item").tmpl(data).appendTo('#list_wrapper');
+            //认证事件
+            jq('.authenticate-btn').on('tap', function () {
+                let id = jq(this).data('id');
+                window.location.href = '/verify/' + id;
+            });
+        }else{
+            jq("#list_item_1").tmpl(data).appendTo('#list_wrapper');
+        }
+    }
+
+
+    // jq('#list-wrapper').children().attr('hidden',true);
+    // jq('#list-wrapper').find('.current-' + current_tab).attr('hidden',false);
+
+</script>
+{/block}

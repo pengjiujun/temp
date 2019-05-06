@@ -1,0 +1,102 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<style>
+    .list-wrapper{
+        padding: 0;
+        width: 100%;
+        list-style: none;
+    }
+    .bank-card-info-wrapper{
+        margin: 10px;
+        padding: 10px;
+        background-color: #ffffff;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 1px 4px #cccccc;
+        -moz-box-shadow: 0 1px 4px #cccccc;
+        box-shadow: 0 1px 4px #cccccc;
+    }
+    .bank-card-info-wrapper .bank-name{
+        padding: 10px 20px;
+        height: 2rem;
+        /*line-height: 2rem;*/
+        font-size: 1rem;
+    }
+    .bank-card-info-wrapper .card-type{
+        display: inline-block;
+        margin: 6px 0 6px 20px;
+        padding: 0 4px;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-size: .6rem;
+        text-align: center;
+        color: #007aff;
+        border: 1px solid #007aff;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+    .bank-card-info-wrapper .card-number{
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    .bank-card-info-wrapper .buttons-wrapper{
+        width: 100%;
+        border-top: 1px solid #e0e0e0;
+        text-align: right;
+        font-size: 2.4rem;
+    }
+    .bank-card-info-wrapper .buttons-wrapper button{
+        margin-top: 10px;
+        padding: 4px 8px;
+        font-size: .8rem;
+    }
+
+    .binding-new-card-button-wrapper{
+        margin: 10px;
+        text-align: center;
+    }
+    .binding-new-card-button-wrapper button{
+        padding: 8px 20px;
+        font-size: 1rem;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+    <div class="bank-card-list-wrapper">
+        <ul class="list-wrapper">
+            {volist name='lists' id='vo'}
+            <li class="bank-card-info-wrapper">
+                <div class="bank-name">{$vo.bank_txt}</div>
+                <div class="card-type">{$vo.type_txt}</div>
+                <div class="card-number">{$vo.card_txt}</div>
+                <div class="buttons-wrapper">
+                    <!--<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined">还款</button>-->
+                    <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">取消绑定</button>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <!--<div class="binding-new-card-button-wrapper">
+        <button type="button" class="mui-btn mui-btn-primary" id="new">绑定新的银行卡</button>
+    </div>-->
+</div>
+{/block}
+
+{block name='js'}
+<!--<script>
+    var jq = jQuery.noConflict();
+    jq('#new').on('tap',function () {
+        window.location.href = window.location.href.replace('binding','binding_card')
+    })
+</script>-->
+{/block}

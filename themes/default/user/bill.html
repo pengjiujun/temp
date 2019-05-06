@@ -1,0 +1,68 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<style>
+    .not-pay-amount-wrapper{
+        padding: 0 10px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 0;
+        background-color: #ffffff;
+    }
+    .not-pay-amount-wrapper .title{
+        display: inline-block;
+        width: 78%;
+        height: 100%;
+        font-size: 1rem;
+    }
+    .not-pay-amount-wrapper .title .amount{
+        color: #007aff;
+        font-weight: 600;
+    }
+    .not-pay-amount-wrapper .repay-btn-wrapper{
+        display: inline-block;
+        width: 22%;
+        height: 100%;
+        text-align: center;
+        font-size: .8rem;
+    }
+    .not-pay-amount-wrapper .repay-btn-wrapper button{
+        padding: 4px 6px;
+        vertical-align: middle;
+    }
+    /*还款记录*/
+    .payment-record-wrapper{
+        margin: 10px 0;
+        width: 100%;
+    }
+    .payment-record-wrapper .title{
+        padding: 0 10px;
+        font-size: .8rem;
+    }
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+    <div class="not-pay-amount-wrapper">
+        <div class="title">待还款：<span class="amount">￥{$total}</span></div>
+        <div class="repay-btn-wrapper"><button type="button" class="mui-btn mui-btn-primary">我要还款</button></div>
+    </div>
+    <div class="payment-record-wrapper">
+        <div class="title">还款记录</div>
+        <div class="auditing-list">
+            <ul class="mui-table-view">
+                {volist name='lists' id='vo'}
+                    <li class="mui-table-view-cell list-row">
+                        <div class="title-date-wrapper">
+                            <div class="title">{$vo.status_txt}</div>
+                            <div class="date">{$vo.repay_time}</div>
+                        </div>
+                        <div class="amount">￥{$vo.price}</div>
+                    </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,73 @@
+{extend name="base" /}
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/company.css">
+<style>
+    .layui-input-block {
+        margin-left: 160px;
+    }
+    .layui-form-label {
+        width: 120px;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class=""><a href="{:url('admin/company/index')}">保险公司管理</a></li>
+            <li class="layui-this">添加经纪公司</li>
+        </ul>
+        <h1>已有经纪公司</h1>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container">
+                {volist name='lists' id='vo'}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">经纪公司名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$vo.name|default=''}" disabled  class="layui-input">
+                    </div>
+                    <button type="button" class="layui-btn del" data-url="{:url('/company/deleteIbec/'.$vo.id)}">删除</button>
+                </div>
+                {/volist}
+                </form>
+            </div>
+        </div>
+        <hr>
+        <h1>新增经纪公司</h1>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container"  action="{:url('company/ibec/'.$info.id)}" method="post">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">新增经纪公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" value="" required  lay-verify="required" placeholder="请输入经纪公司名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="*">保存</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+    $('.del').click(function () {
+        $.post($(this).data('url'),{},function (res) {
+            if (res.code) {
+                location.reload();
+                return false;
+            }
+            layer.msg(res.msg);
+        })
+    });
+</script>
+{/block}

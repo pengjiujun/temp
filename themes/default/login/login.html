@@ -1,0 +1,149 @@
+{extend name='public/base'/ }
+
+{block name='css'}
+		<style>
+			
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+
+			.mui-input-group .mui-input-row{
+				height: 50px;
+				line-height: 50px;
+			}
+			.mui-input-group label {
+				padding-top: 0;
+				padding-bottom: 0;
+				width: 34%;
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				padding-top: 0;
+				padding-bottom: 0;
+				width: 66%;
+				height: 50px;
+				line-height: 50px;
+			}
+			@media screen and (max-width: 360px) {
+				.mui-input-group label {
+					width: 38%;
+				}
+
+				.mui-input-row label~input,
+				.mui-input-row label~select,
+				.mui-input-row label~textarea {
+					width: 62%;
+				}
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.tips {
+				display: block;
+				margin-top: 25px;
+				text-align: center;
+				font-size: .8rem;
+				color: #999999;
+			}
+			.link-area{
+				text-align: center;
+			}
+
+			.oauth-area .oauth-btn {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background-size: 30px 30px;
+				background-position: center center;
+				background-repeat: no-repeat;
+				margin: 0px 20px;
+				/*-webkit-filter: grayscale(100%); */
+				border: solid 1px #ddd;
+				border-radius: 25px;
+			}
+			
+			.oauth-area .oauth-btn:active {
+				border: solid 1px #aaa;
+			}
+			
+			.oauth-area .oauth-btn.disabled {
+				background-color: #ddd;
+			}
+
+			/*获取短信验证码按钮*/
+			.verification-wrapper{
+				padding: 10px;
+				text-align: right;
+			}
+			.verification-wrapper .verification-code-btn{
+				display: inline-block;
+				padding: 6px 8px;
+				font-size: 1rem;
+				color: #007aff;
+				border: 1px solid #007aff;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px;
+			}
+		</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+	<form id='login-form' class="mui-input-group">
+		<div class="mui-input-row">
+			<label>账号</label>
+			<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入用户名">
+		</div>
+		<div class="mui-input-row">
+			<label>密码</label>
+			<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+		</div>
+	</form>
+	<div class="mui-content-padded">
+		<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+		<div class="link-area">
+			<a id='reg' href="{:url('register')}">注册账号</a>
+			<span class="spliter">|</span>
+			<a id='forgetPassword' href="forget_password.html">忘记密码</a>
+		</div>
+	</div>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+	//点击“登录”
+	jq('#login').on('tap',function () {
+		let mobile = jq('#account').val();
+		let password = jq('#password').val();
+		jq.post('/login',{mobile:mobile,password:password},function (res) {
+			if (res.code) {
+				window.location.href = res.url;
+				return false;
+			}
+			mui.alert(res.msg);
+		})
+		// window.location.href = window.location.href.replace('login.html','main.html')
+	})
+</script>
+{/block}

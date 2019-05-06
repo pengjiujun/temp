@@ -1,0 +1,87 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<style>
+	.area {
+		margin: 20px auto 0px auto;
+	}
+	.mui-input-group:first-child {
+		margin-top: 20px;
+	}
+	.mui-input-group label {
+		width: 36%;
+	}
+	.mui-input-row label~input,
+	.mui-input-row label~select,
+	.mui-input-row label~textarea {
+		width: 64%;
+	}
+	.mui-checkbox input[type=checkbox],
+	.mui-radio input[type=radio] {
+		top: 6px;
+	}
+	.mui-content-padded {
+		margin-top: 25px;
+	}
+	.mui-btn {
+		padding: 10px;
+	}
+	.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+		margin-top: 1px;
+	}
+
+	/*获取短信验证码按钮*/
+	.verification-wrapper{
+		padding: 10px;
+		text-align: right;
+	}
+	.verification-wrapper .verification-code-btn{
+		display: inline-block;
+		padding: 6px 8px;
+		font-size: 1rem;
+		color: #007aff;
+		border: 1px solid #007aff;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+	}
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+	<form id='login-form' class="mui-input-group">
+		<div class="mui-input-row">
+			<label>手机</label>
+			<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+		</div>
+		<div class="mui-input-row">
+			<label>短信验证码</label>
+			<input id='verify_no' type="number" class="mui-input-clear mui-input" placeholder="请输入短信验证码">
+		</div>
+		<div class="mui-row verification-wrapper">
+			<div class="verification-code-btn" id="verify">获取验证码</div>
+		</div>
+	</form>
+	<div class="mui-content-padded">
+		<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+	</div>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+	//点击“登录”
+	jq('#login').on('tap',function () {
+		let mobile = jq('#phone').val();
+		let code = jq('#verify_no').val();
+		jq.post('/login',{mobile:mobile,code:code},function (res) {
+			if (res.code) {
+				window.location.href = res.url;
+				return false;
+			}
+			mui.alert(res.msg);
+		})
+	})
+</script>
+{/block}

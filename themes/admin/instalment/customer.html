@@ -1,0 +1,53 @@
+{extend name="base" /}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">客户列表</li>-->
+        <!--</ul>-->
+        <div class="layui-tab-content">
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('Instalment/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">关键词</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('keyword')}" placeholder="手机号/姓名" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 30px;">ID</th>
+                        <th>手机号码</th>
+                        <th>姓名</th>
+                        <th>会员类型</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach name="data" item="vo"}
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.mobile}</td>
+                        <td>{$vo.name}</td>
+                        <td>{php}echo $vo['type'] == 1 ? '普通用户' : '企业用户';{/php}</td>
+                        <td>
+                            <a href="{:url('a/edit/'.$vo.id)}" class="layui-btn layui-btn-normal layui-btn-mini">编辑</a>
+                            <a href="{:url('a/delete/'.$vo.id)}" class="layui-btn layui-btn-danger layui-btn-mini ajax-delete">删除</a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                {$data->render()}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

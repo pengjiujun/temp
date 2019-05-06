@@ -1,0 +1,165 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<link href="__STATIC__/css/mui.poppicker.css" rel="stylesheet" />
+<link href="__STATIC__/css/mui.dtpicker.css" rel="stylesheet" />
+<link href="__STATIC__/css/mui.picker.css" rel="stylesheet" />
+<style>
+    .card-type-wrapper{
+        display: inline-block;
+        width: 60%;
+    }
+
+    /*获取短信验证码按钮*/
+    .verification-wrapper{
+        padding: 10px;
+        text-align: right;
+    }
+    .verification-wrapper .verification-code-btn{
+        display: inline-block;
+        padding: 6px 8px;
+        font-size: 1rem;
+        color: #007aff;
+        border: 1px solid #007aff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>姓名</label>
+            <input id='account_name' name="account_name" type="text" class="mui-input-clear mui-input" placeholder="请输入真实姓名">
+        </div>
+        <div class="mui-input-row" style="height: auto;">
+            <label>银行卡类型</label>
+            <div class="mui-input card-type-wrapper">
+                {volist name='type_lists' id='vo'}
+                <div class="mui-input-row mui-radio mui-left">
+                    <label>{$vo}</label>
+                    <input name="account_type" type="radio" value="{$key}" onchange="changeCardType()">
+                </div>
+                {/volist}
+            </div>
+        </div>
+        <div class="mui-input-row">
+            <label>银行</label>
+            <select name="bank_code" id="bank_code">
+                {volist name='bank_lists' id='vo'}
+                <option value="{$key}">{$vo}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="mui-input-row">
+            <label>卡号</label>
+            <input id='account_no' name="account_no" type="number" class="mui-input-clear mui-input" placeholder="请输入卡号">
+        </div>
+        <div class="mui-input-row" id="cvv2_box" hidden>
+            <label>cvv2</label>
+            <input id='cvv2' name="cvv2" type="number" class="mui-input-clear mui-input" placeholder="请输入cvv2">
+        </div>
+        <div class="mui-input-row" id="valid_date_box" hidden>
+            <label>有效期</label>
+            <input id='validdate' name="validdate" type="text" class="mui-input-clear mui-input" placeholder="请输入信用卡有效期" onclick="selectDate()">
+        </div>
+        <div class="mui-input-row">
+            <label>证件类型</label>
+            <select name="id_type" id="id_type">
+                {volist name='id_type_lists' id='vo'}
+                <option value="{$key}">{$vo}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="mui-input-row">
+            <label>证件号码</label>
+            <input id='idcard' type="number" name="idcard" class="mui-input-clear mui-input" placeholder="请输入证件号码">
+        </div>
+        <div class="mui-input-row">
+            <label>手机:</label>
+            <input id='tel' name="tel" type="text" class="mui-input-clear mui-input" placeholder="请输入银行预留手机号">
+        </div>
+        <div class="mui-input-row">
+            <label>短信验证码:</label>
+            <input id='vercode' name="vercode" type="text" class="mui-input-clear mui-input" placeholder="请输入短信验证码">
+        </div>
+        <div class="mui-row verification-wrapper">
+            <div class="verification-code-btn" type="button" id="bank_verify" data-url="/bankcard_send/" data-order="{$order_id|default=0}">获取验证码</div>
+        </div>
+    </form>
+    <div class="mui-content-padded">
+        <button id='reg' type="button" class="mui-btn mui-btn-block mui-btn-primary" data-url="/bankcard_verify/" data-order="{$order_id|default=0}">保存</button>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__STATIC__/js/mui.picker.js"></script>
+<script src="__STATIC__/js/mui.poppicker.js"></script>
+<script src="__STATIC__/js/mui.dtpicker.js"></script>
+<script>
+    //协议号
+    var srcreqsn = '';
+
+    //选择银行卡类型
+    function changeCardType() {
+        console.log(event);
+        console.log(jq(event.path[0]).val())
+        if(jq(event.path[0]).val() == '00'){
+            jq('#cvv2_box').attr('hidden',true);
+            jq('#valid_date_box').attr('hidden',true);
+        }else if(jq(event.path[0]).val() == '02'){
+            jq('#cvv2_box').attr('hidden',false);
+            jq('#valid_date_box').attr('hidden',false);
+        }
+    }
+    //选择日期
+    function selectDate() {
+        var dtPicker = new mui.DtPicker({
+            type: 'month',
+            beginDate: new Date(),//设置开始日期
+            endDate: new Date(new Date().getFullYear() + 1000, 12),//设置结束日期
+            labels: ['年', '月'],//设置默认标签区域提示语
+        });
+        dtPicker.show(function (e) {
+            jq('#validdate').val(e.text)
+        })
+    }
+
+    //发送短信验证码
+    jq('#bank_verify').on('tap', function () {
+        let data = {
+            account_name: jq('#account_name').val(),
+            bank_code: jq('#bank_code').val(),
+            account_no: jq('#account_no').val(),
+            validdate: jq('#validdate').val(),
+            cvv2: jq('#cvv2').val(),
+            id_type: jq('#id_type').val(),
+            idcard: jq('#idcard').val(),
+            tel: jq('#tel').val(),
+            account_type: jq('input[name="account_type"]:checked').val(),
+        };
+        jq.post(jq(this).data('url') + jq(this).data('order'),data,function (res) {
+            if (res.code) {
+                srcreqsn = res.data;
+            }
+            mui.alert(res.msg);
+        })
+    });
+
+    //银行卡签约
+    jq('#reg').on('tap', function () {
+        let vercode = jq('#vercode').val();
+        jq.post(jq(this).data('url') + jq(this).data('order'), {srcreqsn:srcreqsn,vercode:vercode}, function (res) {
+            if (res.code) {
+                window.location.href = res.data;
+                return;
+            }
+            mui.alert(res.msg);
+        })
+    });
+</script>
+{/block}

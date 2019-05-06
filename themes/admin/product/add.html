@@ -1,0 +1,100 @@
+{extend name="base" /}
+
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/company.css">
+{/block}
+
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class=""><a href="{:url('admin/product/index')}">产品管理</a></li>
+            <li class="layui-this">{$info ? '修改产品' : '添加产品'}</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container"
+                      {present name="info" }
+                      action="{:url('product/update/'.$info.id)}"
+                      {else
+                /}
+                action="{:url('product/save')}"
+                {/present}
+                method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" value="{$info.name|default=''}" required lay-verify="required"
+                               placeholder="产品名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分期期数</label>
+                    <div class="layui-input-block">
+                        <select name="stage" lay-verify="required">
+                            <option value="6" {:isset($info.stage) && 6 === $info.stage ? 'selected="selected"' : ''}>6</option>
+                            <option value="10" {:isset($info.stage) && 10 === $info.stage ? 'selected="selected"' : ''}>10</option>
+                            <option value="12" {:isset($info.stage) && 12 === $info.stage ? 'selected="selected"' : ''}>12</option>
+                            <option value="24" {:isset($info.stage) && 24 === $info.stage ? 'selected="selected"' : ''}>24</option>
+                            <option value="36" {:isset($info.stage) && 36 === $info.stage ? 'selected="selected"' : ''}>36</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="type" value="{$info.type|default=''}" required lay-verify="required"
+                               placeholder="产品类型" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分期标的</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="object" value="{$info.object|default=''}" required
+                               lay-verify="required" placeholder="分期标的" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">收费方式</label>
+                    <div class="layui-input-block">
+                        <select name="charge" lay-verify="required">
+                            {volist name='charge_list' id='vo'}
+                            <option value="{$key}" {:isset($info.charge) && $key === $info.charge ? 'selected="selected"' : ''}>{$vo}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">服务费费率(%)</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="rate" value="{$info.rate|default=''}" required
+                               lay-verify="required|number" placeholder="服务费费率" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">保费总额</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="premium" value="{$info.premium|default=''|intval}" required
+                               lay-verify="required|number" placeholder="保费总额" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" placeholder=""
+                                  class="layui-textarea">{$info.remark|default=''}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="*">保存</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+{/block}

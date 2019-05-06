@@ -1,0 +1,502 @@
+{extend name="base" /}
+
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/layui-2.0.css">
+<link rel="stylesheet" href="__CSS__/admin/layui-admin.css">
+<style>
+    .layui-body{
+        /*padding: 10px;*/
+        background-color: #F7FAFC;
+    }
+    .layui-fluid{
+        padding: 40px 50px;
+    }
+    .unpay-card,.unsign-up-card,.has-late-card,.applying-card{
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+    .unpay-card{
+        background-color: rgba(255, 105, 180, 0.6);
+        /*background-color: #ff69b4;*/
+    }
+    .unsign-up-card{
+        background-color: rgba(50, 205, 50, 0.6);
+    }
+    .has-late-card{
+        background-color: rgba(0, 102, 192, 0.6);
+    }
+    .applying-card{
+        background-color: rgba(255, 68, 0, 0.6);
+    }
+    .unpay-card .layui-card-header,
+    .unsign-up-card .layui-card-header,
+    .has-late-card .layui-card-header,
+    .applying-card .layui-card-header{
+        font-size: 18px;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+    .unpay-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .unsign-up-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .has-late-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .applying-card .layuiadmin-card-list p.layuiadmin-big-font{
+        text-align: right;
+        color: #FFFFFF;
+        font-size: 40px;
+        font-weight: 600;
+    }
+
+    /*公告及分期按钮--start*/
+    .notify-buttons-wrapper{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        font-size: 0;
+    }
+    .notify-buttons-wrapper .notify-wrapper{
+        display: inline-block;
+        width: 64%;
+        height: 100%;
+        line-height: inherit;
+        font-size: 0;
+        border-radius: 5px;
+        background-color: #FFFFFF;
+        -webkit-box-shadow: 0px 0px 10px #E5E6E9;
+        -moz-box-shadow: 0px 0px 10px #E5E6E9;
+        box-shadow: 0px 0px 10px #E5E6E9;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .notify-wrapper .icon-title-wrapper{
+        display: inline-block;
+        width: 74%;
+        height: 100%;
+        line-height: inherit;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .notify-wrapper .icon-title-wrapper .notify-icon{
+        margin: auto 36px;
+        width: 32px;
+        height: auto;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .notify-wrapper .icon-title-wrapper .notify-title{
+        display: inline-block;
+        padding-left: 36px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        border-left: 1px solid #E4E4E4;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .notify-wrapper .date-more-wrapper{
+        display: inline-block;
+        width: 26%;
+        height: 100%;
+        line-height: inherit;
+        text-align: right;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .notify-wrapper .date-more-wrapper .notify-date{
+        display: inline-block;
+        margin-right: 36px;
+        font-size: 12px;
+    }
+    .notify-buttons-wrapper .notify-wrapper .date-more-wrapper .more-notify{
+        display: inline-block;
+        padding: 0 20px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        color: #0793EB;
+        border-left: 1px solid #E4E4E4;
+    }
+    .notify-buttons-wrapper .stage-apply-button,
+    .notify-buttons-wrapper .stage-view-button{
+        margin-left: 2%;
+        width: 16%;
+        height: 100%;
+        line-height: inherit;
+        font-size: 18px;
+        color: #FFFFFF;
+        text-align: center;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        border: none;
+        vertical-align: middle;
+    }
+    .notify-buttons-wrapper .stage-apply-button{
+        background-color: #FA7A1E;
+    }
+    .notify-buttons-wrapper .stage-view-button{
+        background-color: #009be9;
+    }
+    /*公告及分期按钮--end*/
+    .layui-col-space15,.layui-col-space15>*{
+        margin: 0;
+        padding: 0;
+    }
+    /*标题*/
+    .card-title{
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        color: #263548;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1.29px;
+    }
+    /*今日与昨日数据对比*/
+    .today-data-statistics-wrapper{
+        width: 100%;
+        font-size: 0;
+    }
+    #finished, #insured, #offer{
+        display: inline-block;
+        width: 180px;
+        height: 180px;
+    }
+    @media only screen and (max-width: 1450px){
+        #finished, #insured, #offer{
+            width: 150px;
+            height: 150px;
+        }
+    }
+    .param-legend-wrapper{
+        display: inline-block;
+        min-width: 180px;
+        height: 200px;
+        margin-right: 5px;
+        margin-left: 2px;
+        vertical-align: top;
+    }
+    .param-legend-wrapper h2{
+        color: #263548;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 10px 0 5px;
+    }
+    .param-legend-wrapper .related-data-wrapper{
+        height: 65px;
+        color: #1B95E0;
+    }
+    .param-legend-wrapper .related-data-wrapper p{
+        height: 36px;
+        font-size: 12px;
+    }
+    .param-legend-wrapper .related-data-wrapper p em{
+        font-size: 27px;
+        font-weight: bold;
+        font-style: normal;
+    }
+    .param-legend-wrapper .related-data-wrapper p:nth-of-type(1) {
+        margin-right: 10px;
+        color: #ff6600;
+    }
+    .param-legend-wrapper .legend-wrapper span{
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        color: #999999;
+        font-size: 12px;
+    }
+    .param-legend-wrapper .legend-wrapper em {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-top: 15px;
+        margin-right: 6px;
+        background-color: #1B95E0;
+    }
+    .param-legend-wrapper .legend-wrapper span:nth-of-type(1) {
+        margin-right: 10px;
+    }
+    .param-legend-wrapper .legend-wrapper span:nth-of-type(1) em {
+        background: #ff6600;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">首页</li>-->
+        <!--</ul>-->
+
+        <div class="layui-fluid">
+            <!--公告及按钮-->
+            <div class="notify-buttons-wrapper">
+                <div class="notify-wrapper">
+                    <div class="icon-title-wrapper">
+                        <img src="__IMAGES__/horn.png" alt="" class="notify-icon">
+                        <span class="notify-title">公告标题公告标题公告标题</span>
+                    </div>
+                    <div class="date-more-wrapper">
+                        <span class="notify-date">2019/02/08</span>
+                        <a href="" class="more-notify">更多</a>
+                    </div>
+                </div>
+                <button class="stage-apply-button" onclick="window.location.href='{:url(\'/admin/instalment/add\')}'">分期申请</button>
+                <button class="stage-view-button" onclick="window.location.href='{:url(\'/admin/instalment/apply\')}'">分期查询</button>
+            </div>
+            <!--<div class="layui-row layui-col-space15">-->
+                <!--<div class="layui-col-sm6 layui-col-md3 ">-->
+                    <!--<div class="layui-card unpay-card">-->
+                        <!--<div class="layui-card-header">-->
+                            <!--未支付首付-->
+                            <!--&lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="layui-card-body layuiadmin-card-list">-->
+                            <!--<p class="layuiadmin-big-font">{$down_payment|default=0}</p>-->
+                            <!--&lt;!&ndash;<p>-->
+                                <!--总计访问量-->
+                                <!--<span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>-->
+                            <!--</p>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="layui-col-sm6 layui-col-md3">-->
+                    <!--<div class="layui-card has-late-card">-->
+                        <!--<div class="layui-card-header">-->
+                            <!--已逾期-->
+                            <!--&lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="layui-card-body layuiadmin-card-list">-->
+                            <!--<p class="layuiadmin-big-font">{$overdue|default=0}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="layui-col-sm6 layui-col-md3">-->
+                    <!--<div class="layui-card applying-card">-->
+                        <!--<div class="layui-card-header ">-->
+                            <!--待平台审核-->
+                            <!--&lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="layui-card-body layuiadmin-card-list">-->
+                            <!--<p class="layuiadmin-big-font">{$audit|default=0}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="layui-col-sm6 layui-col-md3">-->
+                    <!--<div class="layui-card unsign-up-card">-->
+                        <!--<div class="layui-card-header">-->
+                            <!--待注册-->
+                            <!--&lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="layui-card-body layuiadmin-card-list">-->
+                            <!--<p class="layuiadmin-big-font">{$diff|default=0}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <h1 class="card-title" style="height: 100px;line-height: 100px;">今日</h1>
+                <div class="today-data-statistics-wrapper">
+                    <div id="finished"></div>
+                    <div class="param-legend-wrapper">
+                        <h2>已完成订单量</h2>
+                        <div class="related-data-wrapper">
+                            <p><em>{$todayCount}</em>单</p>
+                            <p><em>{$yesterdayCount}</em>单</p>
+                        </div>
+                        <div class="legend-wrapper">
+                            <span><em></em>今日订单数量</span>
+                            <span><em></em>昨日订单数量</span>
+                        </div>
+                    </div>
+                    <div id="insured"></div>
+                    <div class="param-legend-wrapper">
+                        <h2>已投保费总额</h2>
+                        <div class="related-data-wrapper">
+                            <p><em>{$todayAmount}</em>元</p>
+                            <p><em>{$yesterdayAmount}</em>元</p>
+                        </div>
+                        <div class="legend-wrapper">
+                            <span><em></em>今日保费总额</span>
+                            <span><em></em>昨日保费总额</span>
+                        </div>
+                    </div>
+                    <div id="offer"></div>
+                    <div class="param-legend-wrapper">
+                        <h2>已完成订单量</h2>
+                        <div class="related-data-wrapper">
+                            <p><em>10</em>元</p>
+                            <p><em>10</em>元</p>
+                        </div>
+                        <div class="legend-wrapper">
+                            <span><em></em>今日订单数量</span>
+                            <span><em></em>昨日订单数量</span>
+                        </div>
+                    </div>
+                </div>
+                <!--<h1 class="card-title">本月</h1>-->
+                <!--<div class="layui-row">-->
+                    <!--<div class="layui-col-sm12">-->
+                        <!--<div class="layui-card">-->
+                            <!--<div class="layui-card-header">-->
+                                <!--月数据对比-->
+                            <!--</div>-->
+                            <!--<div class="layui-card-body layuiadmin-card-list">-->
+                                <!--<div id="main" style="width: 100%;height:400px;"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <h1 class="card-title">本周</h1>
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-card" style="margin-right: 8px;">
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <div id="order" style="width: 100%;height:400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-card" style="margin-left: 8px;">
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <div id="price" style="width: 100%;height:400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {//volist name='lists' id='vo'}
+                <!--<div class="layui-col-sm12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            {//$vo.description}
+                            &lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge"></span>&ndash;&gt;
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            {//$vo.value|raw}
+                        </div>
+                    </div>
+                </div>-->
+                {///volist}
+
+            <!--</div>-->
+        </div>
+
+
+
+        <!--<div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container" action="" method="post">
+                    {volist name='lists' id='vo'}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$vo.description}</label>
+                        <div class="layui-input-block">
+                            &lt;!&ndash;<textarea name="value" placeholder="" class="layui-textarea" id="content-{//$key}">{//$vo.value}</textarea>&ndash;&gt;
+                            {$vo.value|raw}
+                        </div>
+                    </div>
+                    <hr>
+                    {/volist}
+                </form>
+            </div>
+        </div>-->
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<!--<script src="__JS__/ueditor/ueditor.config.js"></script>-->
+<!--<script src="__JS__/ueditor/ueditor.all.min.js"></script>-->
+<script src="__JS__/echarts.js"></script>
+<script src="__JS__/admin/chart.js"></script>
+{/block}
+{block name="script"}
+<script>
+    async function getData() {
+        let month = {};
+        let order = {};
+        let price = {};
+        await $.get('/admin.php/charts', {},function (res) {
+            if (res.code) {
+                month = res.data.month;
+                order = res.data.order;
+                price = res.data.price;
+            }
+        });
+
+//        console.log(month);
+//         charts('main', month);
+        charts('order', order);
+        charts('price', price);
+    }
+
+    getData();
+
+
+   /* let total = "{//$total}";
+
+    $(function() {
+        for (let i = 0; i < total; i++) {
+            UE.getEditor('content-'+i);
+        }
+    });*/
+
+
+    function ringChart(element, item_name_1, item_name_2, item_data_1, item_data_2) {
+        var r = echarts.init(document.getElementById(element));
+        var opt = {
+            legend: {
+                orient: 'horizontal',
+                left: '300px',
+                top:'130px',
+                data: [item_name_1, item_name_2]
+            },
+            color: ['#FC7019','#1B95E0'],
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['65%', '90%'],
+                    hoverAnimation: false,
+                    avoidLabelOverlap: false,
+                    stillShowZeroSum: true,
+                    center: ['50%', '50%'],
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 3,
+                            borderColor: '#FFFFFF'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: item_data_1, name: item_name_1},
+                        {value: item_data_2, name: item_name_2},
+                    ]
+                }
+            ]
+        };
+        r.setOption(opt);
+    }
+    let today_count = $($('#finished').next().children('.related-data-wrapper').children().find('em')[0]).text();
+    let yesterday_count = $($('#finished').next().children('.related-data-wrapper').children().find('em')[1]).text();
+    let today_amount = $($('#insured').next().children('.related-data-wrapper').children().find('em')[0]).text();
+    let yesterday_amount = $($('#insured').next().children('.related-data-wrapper').children().find('em')[1]).text();
+    let today_offer = $($('#offer').next().children('.related-data-wrapper').children().find('em')[0]).text();
+    let yesterday_offer = $($('#offer').next().children('.related-data-wrapper').children().find('em')[1]).text();
+    ringChart('finished', '今日订单数', '昨日订单数', Number(today_count), Number(yesterday_count));
+    ringChart('insured', '今日保费额度', '昨日保费额度', Number(today_amount), Number(yesterday_amount));
+    ringChart('offer', '今日优惠总额', '昨日优惠总额' , today_offer, yesterday_offer);
+</script>
+{/block}

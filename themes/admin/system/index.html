@@ -1,0 +1,71 @@
+{extend name="base" /}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">配置列表</li>
+            <li class=""><a href="{:url('system/add')}">添加配置</a></li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>配置字段</th>
+                        <th>描述</th>
+                        <th>是否默认配置</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach name="lists" item="vo"}
+                    <tr>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.description}</td>
+                        <td>{$vo.is_default === 1 ? '是' : '否'}</td>
+                        <td>
+                            <a href="{:url('system/edit/'.$vo.id)}" class="layui-btn layui-btn-normal layui-btn-mini">编辑</a>
+                            {neq name='vo.is_default' value='1'}
+                            <a href="{:url('system/delete/'.$vo.id)}" class="layui-btn layui-btn-danger layui-btn-mini ajax-delete">删除</a>
+                            {/neq}
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <!--分页-->
+                {$lists->render()|raw}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $("#loading").css("display", "none");
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'layuiPage'
+            , pages: total_page
+            , curr: current_page
+            , skip: true
+        });
+    });
+    $('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {
+        window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');
+        $('#loading').css('display', 'block');
+    });
+    $('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {
+        console.log('$(this).prev().val()',$(this).prev().val())
+        if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){
+            window.location.href = window.location.pathname + "?page=" + $(this).prev().val();
+            $('#loading').css('display', 'block');
+        }else{
+            layer.msg('请正确输入页码');
+        }
+    })
+</script>
+{/block}

@@ -1,0 +1,183 @@
+{extend name="base" /}
+
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/layui-2.0.css">
+<link rel="stylesheet" href="__CSS__/admin/layui-admin.css">
+{/block}
+
+
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">还款管理</li>-->
+        <!--</ul>-->
+
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            用户总数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">人</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$total_user|default=0}</p>
+                            <!--<p>
+                                总计用户
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            还款总数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">元</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$total_price|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            订单总数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">个</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$total_order|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            还款总笔数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">笔</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$total|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-tab-content">
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('bill/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">用户名</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('get.keyword')}" placeholder="请输入用户名" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">手机号</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="mobile" value="{:input('get.mobile')}" placeholder="请输入手机号" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label" title="应还款开始时间">应还款开始时间</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="start_time" class="date layui-input search-input" value="{:input('get.start_time')}" placeholder="请选择开始时间">
+                    </div>
+                </div>
+
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label" title="应还款结束时间">应还款结束时间</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_time" class="date layui-input search-input" value="{:input('get.end_time')}" placeholder="请选择结束时间">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>手机号</th>
+                            <th>还款金额</th>
+                            <th>应还款时间</th>
+                            <th>实际还款时间</th>
+                            <th>备注</th>
+                            <th>期数</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="lists" item="vo"}
+                        <tr>
+                            <td>{$vo.user.username}</td>
+                            <td>{$vo.user.mobile}</td>
+                            <td>{$vo.price}</td>
+                            <td>{$vo.repay_time}</td>
+                            <td>{$vo.real_time}</td>
+                            <td>{$vo.remark}</td>
+                            <td>{$vo.stage}</td>
+                            <td>
+                                <a href="" class="layui-btn layui-btn-mini layui-btn-normal">查看订单</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    {$lists->render()|raw}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $("#loading").css("display", "none");
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'layuiPage'
+            , pages: total_page
+            , curr: current_page
+            , skip: true
+        });
+    });
+    $('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {
+        window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');
+        $('#loading').css('display', 'block');
+    });
+    $('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {
+        console.log('$(this).prev().val()',$(this).prev().val())
+        if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){
+            window.location.href = window.location.pathname + "?page=" + $(this).prev().val();
+            $('#loading').css('display', 'block');
+        }else{
+            layer.msg('请正确输入页码');
+        }
+    })
+</script>
+{/block}

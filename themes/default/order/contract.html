@@ -1,0 +1,22 @@
+{extend name='public/base'}
+
+{block name='content'}
+<div class="mui-content">
+    <button type="button" id="contract" data-url="{:url('/contract/'.$info.id)}">合同签约</button>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+    jq('#contract').on('tap', function () {
+        jq.post(jq(this).data('url'),{},function (res) {
+            if (res.code) {
+                window.location.href = res.data;
+                return;
+            }
+
+            mui.alert(res.msg);
+        })
+    });
+</script>
+{/block}

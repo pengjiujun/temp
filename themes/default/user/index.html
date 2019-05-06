@@ -1,0 +1,135 @@
+{extend name='public/base' /}
+
+{block name='css'}
+<style>
+	ul {
+		font-size: 14px;
+		color: #8f8f94;
+	}
+	.mui-btn {
+		padding: 10px;
+	}
+	.page-header{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border: none;
+	}
+
+	/*最后还款日*/
+	.h40{
+		width: 100%;
+		height: 40px;
+		background-color: rgba(0, 122, 255, 0.8);
+	}
+	.amount-date-wrapper{
+		margin: -40px auto 0 auto;
+		padding: 10px;
+		width: 64%;
+		text-align: center;
+		background-color: #ffffff;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		-webkit-box-shadow: 0 1px 4px #999999;
+		-moz-box-shadow: 0 1px 4px #999999;
+		box-shadow: 0 1px 4px #999999;
+
+	}
+	.amount-date-wrapper .amount{
+		width: 100%;
+		height: 2rem;
+		line-height: 2rem;
+		font-size: 1.6rem;
+		color: #007aff;
+		text-align: center;
+	}
+	.amount-date-wrapper .date{
+		width: 100%;
+		height: 1.6rem;
+		line-height: 1.6rem;
+		font-size: .8rem;
+		color: #999999;
+		border-top: 1px solid #e0e0e0;
+	}
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+	<!--<div class="advertisement-wrapper">-->
+	<!--<img class="advertise-icon"></img>-->
+	<!--<div class="advertisement"></div>-->
+	<!--</div>-->
+	<div class="mui-row avatar-user-info-wrapper">
+		<div class="mui-content-padded avatar-user-info">
+			<img class="avatar" src="" alt="">
+			<div class="user-name-authentication-status-wrapper">
+				<div class="user-name">{$user.username|default=''}</div>
+				<!--<div class="authentication-status">未实名</div>-->
+				<div class="authentication-status act-status">已实名</div>
+			</div>
+			<div class="right-arrow-wrapper">
+				<span class="link-text">账户设置</span>
+				<span class="arrow-right"></span>
+			</div>
+		</div>
+	</div>
+	{notempty name='bill'}
+	<div class="h40"></div>
+	<div class="amount-date-wrapper">
+		<div class="amount">￥{$bill.price|default=''}</div>
+		<div class="date">最后还款日{$bill.repay_time|default=''}</div>
+	</div>
+	{/notempty}
+	<div class="main-content-wrapper">
+		<div class="list-wrapper">
+			<ul class="mui-content-padded list-style">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">实名认证</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">绑定手机</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">重置密码</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-content-wrapper">
+		<div class="list-wrapper">
+			<ul class="mui-content-padded list-style">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{:url('orders')}">分期申请查询</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-content-wrapper">
+		<div class="list-wrapper">
+			<ul class="mui-content-padded list-style">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{:url('bill')}">我要还款</a>
+				</li>
+				<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right">每笔金额</a>-->
+				<!--</li>-->
+				<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right">还款记录</a>-->
+				<!--</li>-->
+			</ul>
+		</div>
+	</div>
+	<div class="main-content-wrapper">
+		<div class="list-wrapper">
+			<ul class="mui-content-padded list-style">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{:url('bankcard')}">绑定还款卡</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{/block}
+

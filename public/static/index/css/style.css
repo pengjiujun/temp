@@ -1,0 +1,159 @@
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1rem;
+	color: #333333;
+}
+.mui-content{height: 100%;}
+
+/*顶部标题栏*/
+.page-header{
+	background-color: #007aff;
+}
+.page-header .header-title{
+	color: #ffffff;
+}
+.page-header .mui-action-back{
+	color: #ffffff;
+}
+
+/*账户信息页面*/
+.avatar-user-info-wrapper{
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	/*background-color: #007aff;*/
+	background-color: rgba(0, 122, 255, 0.8);
+	/*-webkit-box-shadow: inset 0px 0px 2px #cccccc;*/
+	/*-moz-box-shadow: inset 0px 0px 2px #cccccc;*/
+	/*box-shadow: inset 0px 0px 2px #cccccc;*/
+	/*background-color: #ffffff;*/
+}
+.avatar-user-info-wrapper .avatar-user-info{
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+}
+.avatar-user-info-wrapper .avatar-user-info .avatar{
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	-webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+	background-color: #cccccc;
+	vertical-align: middle;
+}
+.avatar-user-info-wrapper .avatar-user-info .user-name-authentication-status-wrapper{
+	display: inline-block;
+	height: 60px;
+	line-height: 60px;
+	vertical-align: middle;
+	position: absolute;
+	top: 0;
+	left: 70px;
+	right: 76px;
+}
+.avatar-user-info-wrapper .avatar-user-info .user-name-authentication-status-wrapper .user-name{
+	width: 100%;
+	height: 38px;
+	line-height: 38px;
+	color: #ffffff;
+	font-size: 1rem;
+}
+.avatar-user-info-wrapper .avatar-user-info .user-name-authentication-status-wrapper .authentication-status{
+	width: 60px;
+	height: 20px;
+	line-height: 20px;
+	border: 1px solid #cccccc;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #cccccc;
+	text-align: center;
+	font-size: .8rem;
+}
+.avatar-user-info-wrapper .avatar-user-info .user-name-authentication-status-wrapper .act-status{
+	border-color: #06C774;
+	color: #06C774;
+}
+.avatar-user-info-wrapper .avatar-user-info .right-arrow-wrapper{
+	margin: 0 0 0 auto;
+	display: inline-block;
+	height: 60px;
+	line-height: 60px;
+	vertical-align: middle;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.avatar-user-info-wrapper .avatar-user-info .right-arrow-wrapper .link-text{
+	color: #ffffff;
+	font-size: .8rem;
+}
+.avatar-user-info-wrapper .avatar-user-info .right-arrow-wrapper .arrow-right{
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.main-content-wrapper{
+	width: 100%;
+	background-color: #ffffff;
+	/*padding: 10px 0;*/
+}
+.list-style{
+	padding: 0;
+	color: #333333;
+}
+.mui-table-view-cell::after{
+	left: 0;
+}
+
+/*分期、还款页面的列表样式*/
+/*列表*/
+.main-list-wrapper{
+	margin: 12px 0;
+}
+.list-row{
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-size: 0;
+}
+.title-date-wrapper{
+	display: inline-block;
+	width: 64%;
+	font-size: 1rem;
+	vertical-align: middle;
+}
+.title-date-wrapper .title{
+	width: 100%;
+	height: 1.2rem;
+	line-height: 1.2rem;
+}
+.title-date-wrapper .date{
+	width: 100%;
+	height: .8rem;
+	line-height: .8rem;
+	font-size: .6rem;
+	color: #cccccc;
+}
+.amount{
+	display: inline-block;
+	width: 36%;
+	text-align: right;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #007aff;
+	vertical-align: middle;
+}

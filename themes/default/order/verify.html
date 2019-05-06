@@ -1,0 +1,77 @@
+{extend name='public/base'}
+
+{block name='css'}
+<style>
+    .card-wrapper{
+        font-size: 0;
+    }
+    .card-wrapper .title-wrapper{
+        display: inline-block;
+        width: 68%;
+        height: 2rem;
+        line-height: 2rem;
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+    .card-wrapper .sign-status-wrapper{
+        display: inline-block;
+        width: 32%;
+        height: 2rem;
+        line-height: 2rem;
+        vertical-align: middle;
+        overflow: hidden;
+        position: relative;
+        text-align: right;
+    }
+    .card-wrapper .sign-status-wrapper .signed-icon{
+        font-size: 3rem;
+        font-weight: 800;
+        color: #007aff;
+        position: absolute;
+        top: -.5rem;
+        right: 0;
+    }
+    .card-wrapper .sign-status-wrapper button{
+        font-size: .8rem;
+    }
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell card-wrapper">
+            <div class="title-wrapper">合同签约</div>
+            <div class="sign-status-wrapper">
+                {eq name='info.is_sign' value='1'}
+                <span class="mui-icon mui-icon-checkmarkempty signed-icon"></span>
+                {else/}
+                <button type="button" class="mui-btn mui-btn-primary button-verify" data-url="{:url('contract',['id'=>$info.id])}">去签约</button>
+                {/eq}
+
+
+            </div>
+
+        </li>
+        <li class="mui-table-view-cell card-wrapper">
+            <div class="title-wrapper">银行卡签约</div>
+            <div class="sign-status-wrapper">
+                {eq name='info.is_bank' value='1'}
+                <span class="mui-icon mui-icon-checkmarkempty signed-icon"></span>
+                {else/}
+                <button type="button" class="mui-btn mui-btn-primary button-verify" data-url="{:url('bankcard_verify', ['order_id' => $info.id])}">去绑卡</button>
+                {/eq}
+            </div>
+        </li>
+    </ul>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+    jq('.button-verify').on('tap', function () {
+        window.location.href = jq(this).data('url');
+    });
+</script>
+{/block}

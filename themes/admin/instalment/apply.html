@@ -1,0 +1,145 @@
+{extend name="base" /}
+{block name="css"}
+<style>
+    .table-wrapper{
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .stage-table{
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+    .stage-table th {
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 50px;
+        min-width: 100px;
+    }
+    .stage-table tr {
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+    }
+    .stage-table td {
+        padding: 1px 10px;
+        /*padding-left: 10px;*/
+        /*padding-right: 10px;*/
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .itemBottom{
+        text-align: left;
+    }
+    .stage-table tbody tr:nth-child(4n),
+    .stage-table tbody tr:nth-child(4n+3){
+        background-color: #ffffff;
+    }
+    .stage-table tbody tr:nth-child(4n+1),
+    .stage-table tbody tr:nth-child(4n+2){
+        background-color: #f5f5f5;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">分期申请查询</li>-->
+        <!--</ul>-->
+        <div class="layui-tab-content">
+
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('Instalment/apply')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">关键词</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('keyword')}" placeholder="订单号/车牌号/VIN/姓名/手机号/产品名" class="layui-input search-input" style="width: 300px">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <div class="table-wrapper">
+                        <!--layui-table-->
+                        <table class="stage-table">
+                            <thead>
+                            <tr>
+                                <!--<th style="width: 30px;">ID</th>-->
+                                <th>订单号</th>
+                                <th>车牌号/识别码</th>
+                                <th>被保人</th>
+                                <th>被保人手机号</th>
+                                <th>分期金额</th>
+                                <th>资金方</th>
+                                <th>订单状态</th>
+                                <th>审核结果</th>
+                                <th>审核次数</th>
+                                <th>拒绝原因</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach name="data" item="vo"}
+                            <tr>
+                                <td>{$vo.id}</td>
+                                <!--<td>{$vo.order_sn}</td>-->
+                                <td>
+                                    {if $vo.is_new}
+                                    {$vo.vin}
+                                    {else /}
+                                    {$vo.plate_no}
+                                    {/if}
+                                </td>
+                                <td>{$vo.insured_name}</td>
+                                <td>{$vo.mobile}</td>
+                                <td>{$vo.order_premium}</td>
+                                <td>{$vo.investor}</td>
+                                <td>{$status[$vo.status]}</td>
+                                <td>{if $vo.status == 3}拒绝{else /}同意{/if}</td>
+                                <td>{$vo.verify}</td>
+                                <td>{$vo.order_remark}</td>
+                                <td>
+                                    <a href="{:url('Instalment/edit/'.$vo.id)}" class="layui-btn layui-btn-normal layui-btn-mini">详情</a>
+                                    <!--<a href="{:url('article/delete/'.$vo.id)}" class="layui-btn layui-btn-danger layui-btn-mini ajax-delete">删除</a>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <p class="itemBottom" style="line-height:30px;padding-bottom:5px;color:darkgrey">
+                                        <span style="margin-left:4%;">保险公司：</span>
+                                        <span class="tradeNum" style="display:inline-block;">{$vo.company_name}</span>
+                                        <span style="margin-left:30px;">提交时间：</span>
+                                        <span class="commitPer" style="display:inline-block;">{$vo.create_time|date='Y-m-d H:i:s'}</span>
+                                        <span style="margin-left:30px;">提交人：</span>
+                                        <span class="tradeType" style="display:inline-block;">{$vo.admin_name}</span>
+                                        <!--<span style="margin-left:30px;">业务员：</span>-->
+                                        <!--<span class="tradeAmount" style="display:inline-block;width:60px;">史经龙</span>-->
+                                        <!--<span style="margin-left:5px;"></span>-->
+                                        <!--<span class="tradeAmount" style="display:inline-block;width:auto;">青岛布道华夏汽车连锁有限公司</span>-->
+                                        <!--<span style="margin-left:0px;"></span>-->
+                                        <!--<span class="tradeAmount" style="display:inline-block;width:auto;">(乐意保XSY12)</span>-->
+                                    </p>
+                                    <!--保险公司：{$vo.company_name}&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                    <!--提交时间：{$vo.create_time|date='Y-m-d H:i:s'}&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                    <!--提交人：{$vo.admin_name}-->
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--分页-->
+                    {$data->render()}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,200 @@
+{extend name="base" /}
+
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/layui-2.0.css">
+<link rel="stylesheet" href="__CSS__/admin/layui-admin.css">
+{/block}
+
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">订单查询</li>-->
+        <!--</ul>-->
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            今日订单数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">笔</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$todayCount|default=0}</p>
+                            <!--<p>
+                                总计用户
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            今日保费总额
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">元</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$todayAmount|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            订单总数
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">笔</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$count|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            保费总额
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">元</span>
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$amount|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-tab-content">
+
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('Order/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">关键词</label>-->
+                    <div class="layui-input-inline" style="margin-right: 20px;">
+                        <input type="text" name="keyword" value="{:input('keyword')}" placeholder="车牌号/VIN/姓名/手机号" class="layui-input" style="min-width: 200px;">
+                    </div>
+                </div>
+                <!--<div class="layui-inline search-input-wrapper">-->
+                    <!--&lt;!&ndash;<label class="layui-form-label">订单类型</label>&ndash;&gt;-->
+                    <!--<div class="layui-input-inline" style="margin-right: 20px;">-->
+                        <!--<select class="" name="type">-->
+                            <!--<option value="">请选择订单类型</option>-->
+                            <!--<option value="1" {if input('type') == 1}selected{/if}>车险订单</option>-->
+                            <!--<option value="2" {if input('type') == 2}selected{/if}>保单订单</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <!--<label class="layui-form-label">订单状态</label>-->
+                    <div class="layui-input-inline">
+                        <select class="" name="status">
+                            <option value="">请选择订单状态</option>
+                            <option value="1" {if input('status') == 1}selected{/if}>申请中</option>
+                            <option value="2" {if input('status') == 2}selected{/if}>审核通过</option>
+                            <option value="3" {if input('status') == 3}selected{/if}>驳回</option>
+                            <option value="4" {if input('status') == 4}selected{/if}>待认证</option>
+                            <option value="5" {if input('status') == 5}selected{/if}>保单生效</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th style="width: 30px;">ID</th>
+                            <th>车牌号/识别码</th>
+                            <th>客户姓名</th>
+                            <th>客户类型</th>
+                            <th>客户手机号</th>
+                            <th>保险公司</th>
+                            <!--<th>业务员</th>-->
+                            <th>提交时间</th>
+                            <th>经销商</th>
+                            <th>订单状态</th>
+                            <th>驳回原因</th>
+                            <!--<th>操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="data" item="vo"}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>
+                                {if $vo.is_new}
+                                {$vo.vin}
+                                {else /}
+                                {$vo.plate_no}
+                                {/if}
+                            </td>
+                            <td>{$vo.insured_name}</td>
+                            <td>{php}echo $vo['insured_type'] == 1 ? '个人' : '企业'{/php}</td>
+                            <td>{$vo.mobile}</td>
+                            <td>{$vo.company_name}</td>
+                            <!--<td>{$vo.salesman_name}</td>-->
+                            <td>{$vo.create_time|date='Y-m-d H:i:s'}</td>
+                            <td>{$vo.admin_name}</td>
+                            <td>{$status[$vo.status]}</td>
+                            <td>{$vo.order_remark}</td>
+                            <!--<td>-->
+                                <!--<a href="{:url('article/edit/'.$vo.id)}" class="layui-btn layui-btn-normal layui-btn-mini">编辑</a>-->
+                                <!--<a href="{:url('article/delete/'.$vo.id)}" class="layui-btn layui-btn-danger layui-btn-mini ajax-delete">删除</a>-->
+                            <!--</td>-->
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    {$data->render()|raw}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $("#loading").css("display", "none");
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'layuiPage'
+            , pages: total_page
+            , curr: current_page
+            , skip: true
+        });
+    });
+    $('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {
+        window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');
+        $('#loading').css('display', 'block');
+    });
+    $('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {
+        console.log('$(this).prev().val()',$(this).prev().val())
+        if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){
+            window.location.href = window.location.pathname + "?page=" + $(this).prev().val();
+            $('#loading').css('display', 'block');
+        }else{
+            layer.msg('请正确输入页码');
+        }
+    })
+</script>
+{/block}

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>保分期科技</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="__JS__/layui/css/layui.css">
+    <link rel="stylesheet" href="__CSS__/admin.css">
+    <!--[if lt IE 9]>
+    <script src="__JS__/html5shiv.min.js"></script>
+    <script src="__JS__/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .login-background{
+            width: 100vw;
+        }
+        .login-background .background-image{
+            width: 100vw;
+            height: auto;
+        }
+        .login{
+            width: 100%;
+            /*height: 100%;*/
+            /*position: fixed;*/
+            /*top: 0;*/
+            /*left: 0;*/
+            /*z-index:-10;*/
+            background-image: url(__IMAGES__/beijing.jpg) ;
+            background-size: 100% 100%;
+            overflow: hidden;
+            background-repeat: no-repeat;
+            font-size: 0;
+            /*overflow: scroll;*/
+        }
+        .logo img{
+            /*display: block;*/
+            /*margin: 50px auto 0;*/
+        }
+        .login-box{
+            /*width: 1200px;*/
+            margin: 0 auto;
+            /*margin: 90px auto 0;*/
+            /*padding: 0 180px;*/
+            text-align: center;
+            box-sizing: border-box;
+            /*display: flex;*/
+        }
+        .login .login-box .left-image{
+            width: auto;
+            height: 18vw;
+            vertical-align: middle;
+        }
+        .login .login-box .login-form{
+            /*flex: 1;*/
+            display: inline-block;
+            /*height: 339px;*/
+            background: rgba(0,0,0,0.7);
+            border-radius: 6px;
+            /*margin-left: 20px;*/
+            vertical-align: middle;
+        }
+        .login .login-box .login-form .title{
+            margin: 1.15vw 0 1.78vw 0;
+            text-align: center;
+            font-size: 1.04vw;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: #fff;
+        }
+        .login .login-box .layui-form-item{
+            margin: 1.46vw 0;
+            padding: 0 4.375vw 0 2.6vw;
+            /*display: flex;*/
+            height: 2.1vw;
+            line-height: 2.1vw;
+            color: #FFFFFF;
+            font-size: 0.94vw;
+        }
+        .login .login-box .layui-form-item .layui-form-label{
+            /*padding-left: 0;*/
+            /*padding-right: 0;*/
+            padding: 0;
+            width: 4em;
+            height: 100%;
+            line-height: inherit;
+            font-weight: 600;
+            text-align: right;
+            color: #FFFFFF;
+        }
+        .login  .login-box .layui-form-item .layui-input-block{
+            margin-left: 5.7vw;
+            /*height: 100%;*/
+            /*line-height: inherit;*/
+        }
+        .login  .login-box .layui-form-item .layui-input-block .layui-input{
+            width: 13.75vw;
+        }
+        .login  .login-box .layui-form-item .ipt{
+            width: 13.75vw;
+            /*padding: 0 15px;*/
+            height: 2.1vw;
+            line-height: 2.1vw;
+            background: rgba(255,255,255,0.2);
+            /*box-sizing: border-box;*/
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            /*margin-left: 15px;*/
+            font-size: 0.94vw;
+            color: #fff;
+        }
+        /*.login  .login-box .layui-form-item .yzmBox{*/
+            /*display: inline-block;*/
+            /*margin: 0 0 0 2.1vw;*/
+            /*padding: 0;*/
+            /*width: 7.8vw;*/
+            /*height: 100%;*/
+            /*line-height: inherit;*/
+            /*!*box-sizing: border-box;*!*/
+            /*border-radius: 4px;*/
+            /*!*display: flex;*!*/
+            /*!*justify-content: space-between;*!*/
+        /*}*/
+        .login  .login-box .layui-form-item .yzmBox .layui-input{
+            display: inline-block;
+            width: 7.8vw;
+            height: 2.1vw;
+            line-height: 2.1vw;
+            background: rgba(255,255,255,0.2);
+            /*box-sizing: border-box;*/
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            font-size: 0.94vw;
+            color: #FFFFFF;
+        }
+        .login .login-form .captcha {
+            margin-top: -0.3vw;
+            margin-left: 0.3vw;
+            width: 5.2vw;
+            height: 2.3vw;
+            /*vertical-align: middle;*/
+        }
+        .login .login-box .loginBtn{
+            padding: 0 4.375vw 0 2.6vw;
+            text-align: right;
+            /*margin: 20px 0 0 125px;*/
+        }
+        .login .login-box .loginBtn .btn{
+            display: inline-block;
+            margin-bottom: 1.5vw;
+            width: 13.75vw;
+            height: 2.1vw;
+            line-height: 2.1vw;
+            font-size: 0.94vw;
+            background: #116ca9;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: none;
+            /*margin: 0;*/
+            color: #fff;
+            text-align: center;
+            padding: 0;
+            /*box-sizing: border-box;*/
+        }
+        .beian{
+            margin: 6.25vw 0 0.625vw 0;
+            text-align: center;
+            color: #ffffff;
+            font-size: 1.15vw;
+            letter-spacing: 0.1vw;
+        }
+        .beian-p{
+            color: #c4c4c4;
+            /*display: block;*/
+            text-align: center;
+            margin-top: 0.26vw;
+            letter-spacing: 0.05vw;
+            font-size: 0.94vw;
+        }
+
+        /*.login {background: url(../images/login-bg.jpg) no-repeat;}*/
+        /*.login .login-title {color: #fff;text-align: center;font-size: 20px;margin-top: 200px;}*/
+        /*.login .login-form {max-width: 450px;margin: 10px auto;position: relative;left: -50px;color: #fff;}*/
+        /*.login .login-form .captcha {width: 140px;height: 38px;}*/
+        /*.login .login-form input {background-color: rgba(255, 255, 255, 0.3);border: 1px solid rgba(255, 255, 255, 0.3);color: #fff;}*/
+        /*.login .login-form button {width: 100%;background-color: #048f74;}*/
+
+        /*.logo {margin-top: 20px;margin-left: 20px;}*/
+        /*.logo img{height: 20%;}*/
+        .login .logo{
+            margin: 2.6vw 0 6.77vw 0;
+            width: 100%;
+            height: 12.2vw;
+            text-align: center;
+        }
+        .login .logo img{
+            width: auto;
+            height: 12.2vw;
+        }
+    </style>
+</head>
+<body>
+<div class="login">
+    <div class="logo"><img src="__IMAGES__/logo.png" alt=""></div>
+    <div class="login-box">
+        <img src="__IMAGES__/che.png" alt="" class="left-image">
+        <form class="layui-form login-form" action="{:url('admin/login/login')}" method="post">
+            <div class="title">用户登录</div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required lay-verify="required" autocomplete="off" class="layui-input ipt">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密&emsp;码：</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" class="layui-input ipt">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码：</label>
+                <div class="layui-input-block yzmBox">
+                    <input type="text" name="verify" required lay-verify="required" class="layui-input">
+                    <img src="{:captcha_src()}" alt="点击更换" title="点击更换" onclick="this.src='{:captcha_src()}?time='+Math.random()" class="captcha">
+                </div>
+            </div>
+            <div class=" loginBtn">
+                <button class="layui-btn btn" lay-submit lay-filter="*">登 录</button>
+            </div>
+        </form>
+    </div>
+    <div class="beian">有保险的地方就有保分期科技</div>
+    <div class="beian-p">Copyright©2016 北京保分期科技有限公司  京ICP备17073473号</div>
+    <div class="beian-p">热线电话：4001056105</div>
+</div>
+
+<script>
+    // 定义全局JS变量
+    var GV = {
+        current_controller: "admin/{$controller|default=''}/"
+    };
+</script>
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/layui/lay/dest/layui.all.js"></script>
+<script src="__JS__/admin.js"></script>
+<script>
+    $('.required-item').removeClass('required-item');
+//
+//    // 原生js来实现，避免依赖jquery。需要注意的是：addEventListener/DOMContentLoaded在ie中是只支持>=ie9的，一般足够了
+//    document.addEventListener('DOMContentLoaded', function (event) {
+//        // chrome 浏览器直接加上下面这个样式就行了，但是ff不识别
+//        document.body.style.zoom = 'reset';
+//        document.addEventListener('keydown', function (event) {
+//            if ((event.ctrlKey === true || event.metaKey === true)
+//                && (event.which === 61 || event.which === 107
+//                || event.which === 173 || event.which === 109
+//                || event.which === 187  || event.which === 189))
+//            {
+//                event.preventDefault();
+//            }
+//        }, false);
+//        document.addEventListener('mousewheel DOMMouseScroll', function (event) {
+//            if (event.ctrlKey === true || event.metaKey) {
+//                event.preventDefault();
+//            }
+//        }, false);
+//    }, false);
+</script>
+</body>
+</html>

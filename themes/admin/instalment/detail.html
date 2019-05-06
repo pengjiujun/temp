@@ -1,0 +1,477 @@
+{block name="css"}
+<style>
+    #mainContent {
+
+        padding: 0 100px;
+        background: white;
+    }
+    #btn_goback {
+        width: 120px;
+        height: 40px;
+        background: #f1eff0;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        margin-right: 10px;
+    }
+
+    #btn_fenqi {
+        width: 120px;
+        height: 40px;
+        background: #f36c2d;
+        border: none;
+        outline: none;
+        color: white;
+        border-radius: 6px;
+    }
+
+
+
+    .container h2 {
+        padding: 0 35px 20px;
+        font-weight: bold;
+        font-size: 17px;
+        color: #263548;
+        line-height: 30px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .container h3 {
+        padding: 60px 0 30px;
+        font-size: 16px;
+        color: #555555;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .Detail {
+        margin-top: 20px;
+    }
+
+    .Detail tr {
+        height: 50px;
+    }
+
+    .Detail tr th {
+        width: 13%;
+        text-align: right;
+        color: #a8a8a8;
+        font-weight: normal;
+    }
+
+    .Detail tr td {
+        width: 23%;
+        text-align: left;
+    }
+
+    #div_carInfo .Detail th {
+        width: 12%;
+    }
+
+    #div_carInfo {
+        margin-bottom: 20px;
+    }
+    .Det {
+        width:100%;
+        border: 1px solid #e6e6e6;
+    }
+    .Det tr{
+        text-align:center;
+        height:50px;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .Det tr th{
+        width:45%;
+        font-weight:normal;
+        text-align: left;
+        padding: 0 60px;
+    }
+
+    .Quotation {
+        margin-top: 20px;
+        border: 1px solid #e6e6e6;
+    }
+
+    .Quotation tr {
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .Quotation tr th {
+        width: 50%;
+        text-align: left;
+        padding-left: 60px;
+    }
+
+    .Quotation tr td {
+        width: 8%;
+        text-align: center;
+    }
+
+    .fealway {
+        color: #a8a8a8;
+        height: 50px;
+    }
+
+    .deTop tr th {
+        width: 20%;
+    }
+
+    .deTop tr td {
+        width: 17%;
+        text-align: left;
+    }
+
+    .titleBac {
+        background: url(__IMAGES__/listSign.png) no-repeat left 4px;
+    }
+
+    #imgList img {
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+    .attachInfo {
+        color:#4A4A4A;
+        font-size:14px;
+        margin:35px 10px 20px;
+    }
+
+    .StrongCar {
+        width: 100%;
+        margin-top: 20px;
+        border: 1px solid #e6e6e6;
+    }
+
+    .StrongCar tr {
+        color: #a8a8a8;
+        height: 50px;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .StrongCar tr th{
+        text-align:left;
+        padding-left:60px;
+        font-weight:normal;
+    }
+    .StrongCar .titleTr {
+        color:black;
+    }
+
+    .StrongCar tr {
+        width: 50%;
+        text-align: center;
+    }
+
+    #div_carInfo .fenqiTitle {
+        float:left;
+        color:#555555;
+        line-height:50px;
+        font-size:16px;
+        border:none;
+    }
+    #div_carInfo .fenqiWay {
+        width:100px;
+        line-height:50px;
+        margin-left:50px!important;
+    }
+    #div_carInfo .fenqiTime {
+        float:right;
+    }
+    .fenqiTime span {
+        display:block;
+        width:80px;
+        height:50px;
+        color:#555555;
+        line-height:50px;
+        text-align:center;
+        cursor:pointer;
+        float:left;
+        border:1px solid #E5E6E9;
+        border-bottom:none;
+        border-right:none;
+    }
+    .thisWay {
+        color:#0793EB!important;
+        height:49px!important;
+        border:1px solid #0793EB!important;
+    }
+    .fenqiWrap {
+        display:none;
+    }
+    .fenqiWrap p{
+        margin:30px 0 520px 20px;
+        color:#a8a8a8;
+    }
+    .thisStatus {
+        display:block;
+    }
+
+
+
+</style>
+{/block}
+{block name="body"}
+<div id="mainContent">
+    <div class="container" style="width:100%;">
+        <input type="hidden" id="InstallmentType" value="1">
+        <input type="hidden" id="InstallmentNum" value="12">
+        <input type="hidden" id="ProductName" value="乐意保XSY12">
+        <form id="form1">
+            <h1 style="margin:30px 0 20px;font-size:13px;">分期管理 &gt; 分期订单管理 &gt; <font style="color:#ff6600">详情</font></h1>
+            <h2 class="titleBac">基本信息</h2>
+            <input type="hidden" id="orderId" value="36641">
+            <div id="div_carOwner">
+                <table class="Detail">
+                    <tbody><tr class="borderCss">
+                        <th>被保企业姓名：</th>
+                        <td>苏州亿车加汽车租赁有限公司</td>
+                        <th>被保企业手机：</th>
+                        <td>18606284301</td>
+                        <th>被保企业证件：</th>
+                        <td>91320594MA1NBAUWXE</td>
+                    </tr>
+                    <tr class="borderCss">
+                        <th>车主姓名：</th>
+                        <td>安融资租赁（天津）有限公司</td>
+                        <th>车主证件号：</th>
+                        <td>410923199011210021</td>
+                        <th>车架号：</th>
+                        <td>LNBMCU3K6HZ050456</td>
+                    </tr>
+                    <tr>
+                        <th>发动机号：</th>
+                        <td>GD33DH051200059</td>
+                        <th>新车发票价：</th>
+                        <td>--</td>
+                        <th>初登日期：</th>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <th>车辆所属性质：</th>
+                        <td>--</td>
+                        <th>车辆使用性质：</th>
+                        <td>
+                        </td>
+                        <th>过户日期：</th>
+                        <td>非过户车</td>
+                    </tr>
+                    <tr>
+                        <th>投保人：</th>
+                        <td>华熙商业保理（深圳）有限公司</td>
+                        <th>纳税人识别号：</th>
+                        <td>91440300MA5DDQ2P7W</td>
+
+                    </tr>
+                    <tr>
+                        <th>单据：</th>
+                        <td colspan="6" id="imgList" style="width:30%;">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636731154946443029.jpg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636731154946443029.jpg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636731154352684899.jpg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636731154352684899.jpg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636731154413464982.jpg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636731154413464982.jpg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636646754715987023.jpeg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636646754715987023.jpeg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636646754590674523.jpeg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636646754590674523.jpeg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636646645627080773.jpeg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636646645627080773.jpeg">
+                            <img name="imgphoto" data-original="http://partner.le1bao.com/UploadFile/636646646819112023.jpeg" width="240px" height="160px" src="http://partner.le1bao.com/UploadFile/636646646819112023.jpeg">
+
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <div id="div_carInfo">
+                <h3>保单信息</h3>
+                <table class="Detail">
+                    <tbody><tr class="borderCss">
+                        <th>保险公司：</th>
+                        <td>华海财产保险股份有限公司</td>
+                        <th>保费总额：</th>
+                        <td>3,297.44元</td>
+                    </tr>
+                    <tr class="borderCss">
+                        <th>商业险总额：</th>
+                        <td>3,297.44元</td>
+                        <th>交强险：</th>
+                        <td>0.00元</td>
+                        <th>车船税：</th>
+                        <td>0.00元</td>
+                    </tr>
+                    <tr class="borderCss">
+                        <th>商业险起止日期：</th>
+                        <td>-- 至 --</td>
+                        <th>交强险起止日期：</th>
+                        <td>-- 至 --</td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <div id="div_carInfo">
+                <div style="height:50px;border-bottom:1px solid #ddd;">
+                    <h4 class="fenqiTitle">乐意保XSY12</h4>
+                    <span class="fenqiWay">12期 * <em>1</em>年</span>
+                    <div class="fenqiTime">
+                        <span class="thisWay">第一年</span>
+                        <span style="display: none;">第二年</span>
+                        <span style="border-right: 1px solid rgb(229, 230, 233); display: none;">第三年</span>
+                    </div>
+                </div>
+                <div class="fenqiWrap thisStatus">
+                    <table class="Detail deTop">
+
+                        <tbody><tr class="borderCss">
+                            <th>分期总额：</th>
+                            <td style="color:#ff6600;">3,297.44元</td>
+                            <th>首付总额：</th>
+                            <td style="width:36%;" colspan="3">
+                                平台应收：329.74元<br>（交强险0.00+车船税0.00+保证金329.74+线上服务费0.00)
+                                <br>商户应收：0.00元
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>分期期数：</th>
+                            <td>12期</td>
+                            <th>分期优惠比例/金额：</th>
+                            <td>0.00%/0.00元</td>
+                            <th>优惠期数：</th>
+                            <td>无</td>
+                        </tr>
+                        </tbody></table>
+                    <table class="Det" id="table_shangyexian1">
+                        <tbody><tr class="borderCss" style="background-color:#f7fafc">
+                            <td style="color:black;">应还日期</td>
+                            <td>实还日期</td>
+                            <td>期数</td>
+                            <td>应还金额/元</td>
+                            <td>滞纳金</td>
+
+                            <td>实还金额/元</td>
+                            <td>账单状态</td>
+                        </tr>
+
+                        <tr style="color:#a8a8a8;">
+                            <td>2018-10-20</td>
+                            <td>--</td>
+                            <td>1</td>
+                            <td>277.70</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2018-11-20</td>
+                            <td>--</td>
+                            <td>2</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2018-12-20</td>
+                            <td>--</td>
+                            <td>3</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-01-20</td>
+                            <td>--</td>
+                            <td>4</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-02-20</td>
+                            <td>--</td>
+                            <td>5</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-03-20</td>
+                            <td>--</td>
+                            <td>6</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-04-20</td>
+                            <td>--</td>
+                            <td>7</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-05-20</td>
+                            <td>--</td>
+                            <td>8</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-06-20</td>
+                            <td>--</td>
+                            <td>9</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-07-20</td>
+                            <td>--</td>
+                            <td>10</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#a8a8a8;">
+                            <td>2019-08-20</td>
+                            <td>--</td>
+                            <td>11</td>
+                            <td>269.00</td>
+                            <td>0.00</td>
+
+                            <td>0.00</td>
+                            <td>待还款</td>
+                        </tr>
+                        <tr style="color:#0793EB;">
+                            <td>2019-09-20</td>
+                            <td>--</td>
+                            <td>12</td>
+                            <td>329.74</td>
+                            <td>0.00</td>
+
+                            <td>保证金冲抵</td>
+                            <td>待还款</td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <div class="fenqiWrap"><p>12期还款计划待定，<em class="bus2">10%保证金冲抵最后一期</em></p></div>
+                <div class="fenqiWrap"><p>12期还款计划待定，<em class="bus3">10%保证金冲抵最后一期</em></p></div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

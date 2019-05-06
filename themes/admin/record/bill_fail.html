@@ -1,0 +1,113 @@
+{extend name="base" /}
+
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">还款失败记录</li>-->
+        <!--</ul>-->
+
+        <div class="layui-tab-content">
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('record/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">用户名</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('get.keyword')}" placeholder="请输入用户名" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">手机号</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="mobile" value="{:input('get.mobile')}" placeholder="请输入手机号" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label" title="还款失败开始时间">还款失败开始时间</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="start_time" class="date layui-input search-input" value="{:input('get.start_time')}" placeholder="请选择开始时间">
+                    </div>
+                </div>
+
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label" title="还款失败结束时间">还款失败结束时间</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_time" class="date layui-input search-input" value="{:input('get.end_time')}" placeholder="请选择结束时间">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>手机号</th>
+                            <th>还款金额</th>
+                            <th>支付订单号</th>
+                            <th>应还款时间</th>
+                            <th>还款失败时间</th>
+                            <th>失败原因</th>
+                            <th>当前状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="lists" item="vo"}
+                        <tr>
+                            <td>{$vo.user.username}</td>
+                            <td>{$vo.user.mobile}</td>
+                            <td>{$vo.price}</td>
+                            <td>{$vo.req_sn}</td>
+                            <td>{$vo.repay_time}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>{$vo.remark}</td>
+                            <td>{$vo.status}</td>
+                            <td>
+                                <a href="" class="layui-btn layui-btn-normal layui-btn-mini">查看订单</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    {$lists->render()|raw}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $("#loading").css("display", "none");
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'layuiPage'
+            , pages: total_page
+            , curr: current_page
+            , skip: true
+        });
+    });
+    $('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {
+        window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');
+        $('#loading').css('display', 'block');
+    });
+    $('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {
+        console.log('$(this).prev().val()',$(this).prev().val())
+        if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){
+            window.location.href = window.location.pathname + "?page=" + $(this).prev().val();
+            $('#loading').css('display', 'block');
+        }else{
+            layer.msg('请正确输入页码');
+        }
+    })
+</script>
+{/block}

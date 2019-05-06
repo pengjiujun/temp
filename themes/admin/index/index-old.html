@@ -1,0 +1,209 @@
+{extend name="base" /}
+
+{block name='css'}
+<link rel="stylesheet" href="__CSS__/admin/layui-2.0.css">
+<link rel="stylesheet" href="__CSS__/admin/layui-admin.css">
+<style>
+    .layui-body{
+        padding: 10px;
+        background-color: #F7FAFC;
+    }
+    .unpay-card,.unsign-up-card,.has-late-card,.applying-card{
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+    .unpay-card{
+        background-color: rgba(255, 105, 180, 0.6);
+        /*background-color: #ff69b4;*/
+    }
+    .unsign-up-card{
+        background-color: rgba(50, 205, 50, 0.6);
+    }
+    .has-late-card{
+        background-color: rgba(0, 102, 192, 0.6);
+    }
+    .applying-card{
+        background-color: rgba(255, 68, 0, 0.6);
+    }
+    .unpay-card .layui-card-header,
+    .unsign-up-card .layui-card-header,
+    .has-late-card .layui-card-header,
+    .applying-card .layui-card-header{
+        font-size: 18px;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+    .unpay-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .unsign-up-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .has-late-card .layuiadmin-card-list p.layuiadmin-big-font,
+    .applying-card .layuiadmin-card-list p.layuiadmin-big-font{
+        text-align: right;
+        color: #FFFFFF;
+        font-size: 40px;
+        font-weight: 600;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">首页</li>-->
+        <!--</ul>-->
+
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm6 layui-col-md3 ">
+                    <div class="layui-card unpay-card">
+                        <div class="layui-card-header">
+                            未支付首付
+                            <!--<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>-->
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$down_payment|default=0}</p>
+                            <!--<p>
+                                总计访问量
+                                <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card has-late-card">
+                        <div class="layui-card-header">
+                            已逾期
+                            <!--<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>-->
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$overdue|default=0}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card applying-card">
+                        <div class="layui-card-header ">
+                            待平台审核
+                            <!--<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>-->
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$audit|default=0}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card unsign-up-card">
+                        <div class="layui-card-header">
+                            待注册
+                            <!--<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>-->
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <p class="layuiadmin-big-font">{$diff|default=0}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-sm12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            月数据对比
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <div id="main" style="width: 100%;height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-sm6">
+                    <div class="layui-card">
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <div id="order" style="width: 100%;height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <div class="layui-card">
+                        <div class="layui-card-body layuiadmin-card-list">
+                            <div id="price" style="width: 100%;height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {//volist name='lists' id='vo'}
+                <!--<div class="layui-col-sm12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            {//$vo.description}
+                            &lt;!&ndash;<span class="layui-badge layui-bg-blue layuiadmin-badge"></span>&ndash;&gt;
+                        </div>
+                        <div class="layui-card-body layuiadmin-card-list">
+                            {//$vo.value|raw}
+                        </div>
+                    </div>
+                </div>-->
+                {///volist}
+
+            </div>
+        </div>
+
+
+
+        <!--<div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container" action="" method="post">
+                    {volist name='lists' id='vo'}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$vo.description}</label>
+                        <div class="layui-input-block">
+                            &lt;!&ndash;<textarea name="value" placeholder="" class="layui-textarea" id="content-{//$key}">{//$vo.value}</textarea>&ndash;&gt;
+                            {$vo.value|raw}
+                        </div>
+                    </div>
+                    <hr>
+                    {/volist}
+                </form>
+            </div>
+        </div>-->
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<!--<script src="__JS__/ueditor/ueditor.config.js"></script>-->
+<!--<script src="__JS__/ueditor/ueditor.all.min.js"></script>-->
+<script src="__JS__/echarts.js"></script>
+<script src="__JS__/admin/chart.js"></script>
+{/block}
+{block name="script"}
+<script>
+    async function getData() {
+        let month = {};
+        let order = {};
+        let price = {};
+        await $.get('/admin.php/charts', {},function (res) {
+            if (res.code) {
+                month = res.data.month;
+                order = res.data.order;
+                price = res.data.price;
+            }
+        });
+
+        console.log(month);
+        charts('main', month);
+        charts('order', order);
+        charts('price', price);
+    }
+
+    getData();
+
+
+   /* let total = "{//$total}";
+
+    $(function() {
+        for (let i = 0; i < total; i++) {
+            UE.getEditor('content-'+i);
+        }
+    });*/
+</script>
+{/block}

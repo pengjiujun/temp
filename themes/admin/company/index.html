@@ -1,0 +1,93 @@
+{extend name="base" /}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">保险公司管理</li>-->
+            <!--<li class=""><a href="{:url('company/add')}">添加保险公司</a></li>-->
+        <!--</ul>-->
+        <div class="layui-tab-content">
+
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('company/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">关键词</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('keyword')}" placeholder="请输入关键词" class="layui-input search-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+                <div class="layui-inline">
+                    <a href="{:url('company/add')}" class="layui-btn add-new-user">添加保险公司</a>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>保险公司名称</th>
+                            <th>账号</th>
+                            <th>开户行</th>
+                            <th>创建时间</th>
+                            <th>订单状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="lists" item="vo"}
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.account}</td>
+                            <td>{$vo.bank}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>{$status[$vo.status]}</td>
+                            <td>
+                                <a href="{:url('company/ibec/'.$vo.id)}" class="layui-btn layui-btn-mini layui-btn-normal">添加经纪公司</a>
+                                <a href="{:url('company/edit/'.$vo.id)}" class="layui-btn layui-btn-mini layui-btn-normal">编辑</a>
+                                <a href="{:url('company/delete/'.$vo.id)}" class="layui-btn layui-btn-mini layui-btn-danger ajax-delete">删除</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    {$lists->render()|raw}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $("#loading").css("display", "none");
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'layuiPage'
+            , pages: total_page
+            , curr: current_page
+            , skip: true
+        });
+    });
+    $('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {
+        window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');
+        $('#loading').css('display', 'block');
+    });
+    $('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {
+        console.log('$(this).prev().val()',$(this).prev().val())
+        if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){
+            window.location.href = window.location.pathname + "?page=" + $(this).prev().val();
+            $('#loading').css('display', 'block');
+        }else{
+            layer.msg('请正确输入页码');
+        }
+    })
+</script>
+{/block}

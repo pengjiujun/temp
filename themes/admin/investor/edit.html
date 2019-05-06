@@ -1,0 +1,50 @@
+{extend name="head" /}
+{block name="body"}
+<div class="layui-body" style="left: 50px;right: 10%"">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container" action="{:url('admin/Investor/update')}" method="post">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资方信息：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="investors" value="{$investor.investors}" required lay-verify="required" placeholder="请输入资方信息" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="id" value="{$investor.id}" />
+                            <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+                            <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    form.on('submit(*)', function (data) {
+        console.log(data);
+        $.ajax({
+            url: data.form.action,
+            type: data.form.method,
+            data: $(data.form).serialize(),
+            success: function (info) {
+                if (info.code === 1) {
+                    setTimeout(function () {
+                        location.href = info.url;
+                    }, 1000);
+                    //todo feng 父页面加载
+                    parent.location.reload();
+                }
+                layer.msg(info.msg);
+            }
+        });
+        return false;
+    });
+</script>
+{/block}

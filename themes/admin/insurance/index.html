@@ -1,0 +1,120 @@
+{extend name="base" /}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this">待审核申请</li>-->
+        <!--</ul>-->
+        <div class="layui-tab-content">
+
+            <form class="layui-form layui-form-pane search-wrapper" action="{:url('Insurance/index')}" method="get">
+                <div class="layui-inline search-input-wrapper">
+                    <!--<label class="layui-form-label">关键词</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:input('keyword')}" placeholder="订单号查询/保单号查询/被保人/被保人手机号" class="layui-input search-input" style="width: 360px;">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-item" style="display: inline-block;margin: 0;">生效日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="start_time" value="{:input('start_time')}" laydate-format="YYYY-MM-DD" placeholder="开始日期" class="layui-input datetime">
+                    </div>
+                    -
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_time" value="{:input('end_time')}" laydate-format="YYYY-MM-DD" placeholder="结束日期" class="layui-input datetime">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <select class="" name="status">
+                            <option value="">请选择订单状态</option>
+                            <option value="1" {if input('status') == 1}selected{/if}>申请中</option>
+                            <option value="2" {if input('status') == 2}selected{/if}>审核通过</option>
+                            <option value="3" {if input('status') == 3}selected{/if}>驳回</option>
+                            <option value="4" {if input('status') == 4}selected{/if}>待认证</option>
+                            <option value="5" {if input('status') == 5}selected{/if}>保单生效</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn search-button">搜索</button>
+                </div>
+            </form>
+            <!--<hr>-->
+
+            <form action="" method="post" class="ajax-form">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>保单号</th>
+                            <th>保险公司</th>
+                            <th>被保人</th>
+                            <th>被保人手机号</th>
+                            <th>生效日期</th>
+                            <th>保费合计/元</th>
+                            <th>保单状态</th>
+                            <th>订单状态</th>
+                            <th>提交人</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="data" item="vo"}
+                        <tr>
+                            <td>{$vo.order_sn}</td>
+                            <td>{$vo.policy_no}</td>
+                            <td>{$vo.company_name}</td>
+                            <td>{$vo.insured_name}</td>
+                            <td>{$vo.mobile}</td>
+                            <td>{$vo.company_name}</td>
+                            <td>{$vo.salesman_name}</td>
+                            <td>{$vo.create_time|date='Y-m-d H:i:s'}</td>
+                            <td>{$vo.admin_name}</td>
+                            <td>{$status[$vo.status]}</td>
+                            <td>
+                                <!--<a href="{:url('article/edit/'.$vo.id)}" class="layui-btn layui-btn-mini layui-btn-normal">编辑</a>-->
+                                <!--<a href="{:url('article/delete/'.$vo.id)}" class="layui-btn layui-btn-mini layui-btn-danger ajax-delete">删除</a>-->
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <!--分页-->
+                    <!--{$data->render()}-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+<!--{block name="script"}-->
+<!--<script>-->
+    <!--$("#loading").css("display", "none");-->
+    <!--layui.use(['laypage', 'layer'], function() {-->
+        <!--var laypage = layui.laypage-->
+            <!--, layer = layui.layer;-->
+        <!--laypage({-->
+            <!--cont: 'layuiPage'-->
+            <!--, pages: total_page-->
+            <!--, curr: current_page-->
+            <!--, skip: true-->
+        <!--});-->
+    <!--});-->
+    <!--$('#layuiPage').children('#layui-laypage-0').children('a').on('click', function () {-->
+        <!--window.location.href = window.location.pathname + "?page=" + $(this).attr('data-page');-->
+        <!--$('#loading').css('display', 'block');-->
+    <!--});-->
+    <!--$('#layuiPage').children('#layui-laypage-0').find('.layui-laypage-btn').on('click', function () {-->
+        <!--console.log('$(this).prev().val()',$(this).prev().val())-->
+        <!--if(Number($(this).prev().val()) >= 1 && Number($(this).prev().val()) <= total_page && Number($(this).prev().val()) != current_page){-->
+            <!--window.location.href = window.location.pathname + "?page=" + $(this).prev().val();-->
+            <!--$('#loading').css('display', 'block');-->
+        <!--}else{-->
+            <!--layer.msg('请正确输入页码');-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->
+<!--{/block}-->

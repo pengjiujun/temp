@@ -1,0 +1,422 @@
+{extend name="base" /}
+{block name="css"}
+<style>
+    .layui-form-label{
+        width: 20%;
+    }
+    .layui-input-block{
+        width: 80%;
+        margin-left: 24%;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="layui-body">
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">新增保单分期</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form form-container" action="{:url('admin/Instalment/save')}" method="post">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资方信息：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="investor" value="" required lay-verify="required" placeholder="请输入资方信息" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">投保人：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="policy" value="" lay-verify="required" placeholder="请输入投保人" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分期产品选择：</label>
+                        <div class="layui-input-block">
+                            <select name="product_id" class="layui-select" lay-verify="required" lay-search>
+                                <option value="">请选择</option>
+                                {volist name="products" id="vo"}
+                                <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">金融信息服务费：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="service" value="" lay-verify="required" placeholder="请输入金融信息服务费" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保险公司：</label>
+                        <div class="layui-input-block">
+                            <select name="company_id" class="layui-select" lay-verify="required" lay-search>
+                                <option value="">请选择</option>
+                                {volist name="companys" id="vo"}
+                                <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单截止日期：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="policy_expiry" value="" lay-verify="required" placeholder="请输入保单截止日期" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单变更日期：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="policy_update" value="" lay-verify="required" placeholder="请输入保单变更日期" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单剩余天数：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="" value="" disabled class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">商业险总额：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="premium" value="" lay-verify="required" placeholder="请输入商业险总额" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="" value="" lay-verify="required" placeholder="请输入交强险" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">新车未上牌：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="is_new" lay-skin="switch" lay-text="是|否">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item invoice" style="display: none">
+                        <label class="layui-form-label">合格证/发票：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="invoice" value="" class="layui-input layui-input-inline" id="thumb-invoice">
+                            <input type="file" name="file" class="layui-upload-file">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item license">
+                        <label class="layui-form-label">行驶证：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="license_original" value="" class="layui-input layui-input-inline" id="thumb-original">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="正本">
+                            <img src="" width="100px" style="display: none" />
+                            <input type="hidden" name="license_copy" value="" class="layui-input layui-input-inline" id="thumb-copy">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="副本">
+                            <img src="" width="100px" style="display: none" />
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item plate-no">
+                        <label class="layui-form-label">车牌号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="plate_no" value="" lay-verify="required" placeholder="请输入车牌号" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车主：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="owner" value="" lay-verify="required" placeholder="请输入车主" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆识别代码：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="vin" value="" lay-verify="required" placeholder="请输入车辆识别代码" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">发动机号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="engine" value="" lay-verify="required" placeholder="请输入发动机号" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆价格：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="price" value="" lay-verify="required" placeholder="请输入车辆价格" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单被保人类型：</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="type" value="1" title="个人" checked lay-filter="type">
+                            <input type="radio" name="type" value="2" title="企业" lay-filter="type">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item is-legal" style="display: none">
+                        <label class="layui-form-label">经办人是法人：</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="is_legal" value="1" title="是" lay-filter="legal">
+                            <input type="radio" name="is_legal" value="0" title="否" checked lay-filter="legal">
+                        </div>
+                    </div>
+
+                    <!--个人-->
+                    <div class="layui-form-item mobile">
+                        <label class="layui-form-label">被保人手机号：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="mobile" value="" lay-verify="required" placeholder="请输入被保人手机号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item upload-card">
+                        <label class="layui-form-label">身份证：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="card_front" value="" class="layui-input layui-input-inline" id="thumb-front">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="正面">
+                            <img src="" width="100px" style="display: none" />
+                            <input type="hidden" name="card_con" value="" class="layui-input layui-input-inline" id="thumb-con">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="反面">
+                            <img src="" width="100px" style="display: none" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item name">
+                        <label class="layui-form-label">被保人姓名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" value="" lay-verify="required" placeholder="请输入被保人姓名" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item card">
+                        <label class="layui-form-label">身份证号码：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="card" value="" lay-verify="required" placeholder="请输入身份证号码" class="layui-input">
+                        </div>
+                    </div>
+                    <!--个人-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">户籍省份：</label>
+                        <div class="layui-input-block">
+                            <select name="province" class="layui-select" lay-verify="required" lay-search lay-filter="province">
+                                <option value="">请选择</option>
+                                {volist name="areas" id="vo"}
+                                <option value="{$vo.id}">{$vo.area_name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">户籍城市：</label>
+                        <div class="layui-input-block">
+                            <select name="city" class="layui-select" lay-verify="required" lay-search>
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">详细地址：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="address" value="" lay-verify="required" placeholder="请输入详细地址" class="layui-input">
+                        </div>
+                    </div>
+                    <!--企业-->
+                    <div id="enterprise" style="display: none">
+                    <div class="layui-form-item agreement">
+                        <label class="layui-form-label">经办人授权协议：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="agreement" value="" class="layui-input layui-input-inline" id="thumb">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <img src="" width="100px" style="display: none" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业营业执照：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="enterprise_license" value="" class="layui-input layui-input-inline" id="thumb-license">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <img src="" width="100px" style="display: none" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">被保企业名称：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="enterprise" value="" placeholder="请输入被保企业名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业信用代码：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="code" value="" placeholder="请输入被保企业名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">营业执照有效期：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="expiry" value="" placeholder="请输入营业执照有效期" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item legal">
+                        <label class="layui-form-label">法人姓名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="legal" value="" placeholder="请输入法人姓名" class="layui-input">
+                        </div>
+                    </div>
+                        <div class="layui-form-item legal-card">
+                            <label class="layui-form-label">法人身份证号：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="legal_card" value="" placeholder="请输入法人身份证号" class="layui-input">
+                            </div>
+                        </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业账号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="account" value="" placeholder="请输入企业账号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">开户行：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bank" value="" placeholder="请输入开户行" class="layui-input">
+                        </div>
+                    </div>
+                    </div>
+                    <!--企业-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">业务员：</label>
+                        <div class="layui-input-block">
+                            <select name="salesman_id" class="layui-select" lay-verify="required" lay-search>
+                                <option value="1">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保单/批单/发票：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="policy_img" value="" class="layui-input layui-input-inline" id="thumb-policy-img">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="保单">
+                            <img src="" width="100px" style="display: none" />
+                            <input type="hidden" name="endorsement" value="" class="layui-input layui-input-inline">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="批单">
+                            <img src="" width="100px" style="display: none" />
+                            <input type="hidden" name="receipt" value="" class="layui-input layui-input-inline">
+                            <input type="file" name="file" class="layui-upload-file" lay-title="发票">
+                            <img src="" width="100px" style="display: none" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="*">提交分期申请</button>
+                            <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    form.on('radio(type)', function (data) {
+        if(data.value == 2){
+            $('.is-legal').show();
+            $('#enterprise').show();
+            $("#enterprise input[type='text']").attr('lay-verify', 'required');
+            $('.mobile label').html('经办人手机号：');
+            $('.mobile div input').attr('placeholder', '请输入经办人手机号');
+            $('.upload-card label').html('经办人身份证：');
+            $('.name label').html('经办人姓名：');
+            $('.name div input').attr('placeholder', '请输入经办人姓名');
+            $('.card label').html('经办人身份证号：');
+            $('.card div input').attr('placeholder', '请输入经办人身份证号');
+        }else{
+            $('.is-legal').hide();
+            $('#enterprise').hide();
+            $("#enterprise input[type='text']").removeAttr('lay-verify');
+            $('.mobile label').html('还款人手机号：');
+            $('.mobile div input').attr('placeholder', '请输入还款人手机号');
+            $('.upload-card label').html('身份证：');
+            $('.name label').html('还款人姓名：');
+            $('.name div input').attr('placeholder', '请输入还款人姓名');
+            $('.card label').html('还款人身份证号：');
+            $('.card div input').attr('placeholder', '请输入还款人身份证号');
+        }
+    });
+
+    form.on('radio(legal)', function (data) {
+        if(data.value == 1){
+            $('.mobile label').html('法人手机号：');
+            $('.mobile div input').attr('placeholder', '请输入法人手机号');
+            $('.upload-card label').html('法人身份证：');
+            $('.name label').html('法人姓名：');
+            $('.name div input').attr('placeholder', '请输入法人姓名');
+            $('.card label').html('法人身份证号：');
+            $('.card div input').attr('placeholder', '请输入法人身份证号');
+            $('.agreement').hide();
+            $('.legal').hide();
+            $('.legal-card').hide();
+        }else{
+            $('.mobile label').html('经办人手机号：');
+            $('.mobile div input').attr('placeholder', '请输入经办人手机号');
+            $('.upload-card label').html('经办人身份证：');
+            $('.name label').html('经办人姓名：');
+            $('.name div input').attr('placeholder', '请输入经办人姓名');
+            $('.card label').html('经办人身份证号：');
+            $('.card div input').attr('placeholder', '请输入经办人身份证号');
+            $('.agreement').show();
+            $('.legal').show();
+            $('.legal-card').show();
+        }
+    });
+
+    form.on('switch', function(data){
+        if(data.elem.checked == true){
+            data.elem.value = 1;
+            $('.invoice').show();
+            $('.license').hide();
+            $('.plate-no').hide();
+        }else{
+            data.elem.value = 0;
+            $('.invoice').hide();
+            $('.license').show();
+            $('.plate-no').show();
+        }
+    });
+
+    form.on('select(province)', function(data){
+        $.ajax({
+            method: 'post',
+            url: '/admin.php/Area/getcity',
+            data: {
+                pid: data.value,
+            },
+            success(res){
+                if(res.code == 0){
+                    var html = '<option value="">请选择</option>';
+                    for (var i=0;i<res.data.length;i++){
+                        html += '<option value="'+res.data[i].id+'">'+res.data[i].area_name+'</option>';
+                    }
+                    $('select[name="city"]').html(html);
+                    form.render('select');
+                }
+            }
+        })
+    });
+</script>
+{/block}

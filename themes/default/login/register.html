@@ -1,0 +1,141 @@
+{extend name='public/base'/ }
+
+{block name='css'}
+<style>
+	.area {
+		margin: 20px auto 0px auto;
+	}
+	.mui-input-group:first-child {
+		margin-top: 20px;
+	}
+	.mui-input-group label {
+		width: 36%;
+	}
+	.mui-input-row label~input,
+	.mui-input-row label~select,
+	.mui-input-row label~textarea {
+		width: 64%;
+	}
+	.mui-checkbox input[type=checkbox],
+	.mui-radio input[type=radio] {
+		top: 6px;
+	}
+	.mui-content-padded {
+		margin-top: 25px;
+	}
+	.mui-btn {
+		padding: 10px;
+	}
+	/*获取短信验证码按钮*/
+	.verification-wrapper{
+		padding: 10px;
+		text-align: right;
+	}
+	.verification-wrapper .verification-code-btn{
+		display: inline-block;
+		padding: 6px 8px;
+		font-size: 1rem;
+		color: #007aff;
+		border: 1px solid #007aff;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+	}
+</style>
+{/block}
+
+{block name='content'}
+<div class="mui-content">
+	<form class="mui-input-group">
+		<div class="mui-input-row">
+			<label>用户名</label>
+			<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入用户名">
+		</div>
+		<div class="mui-input-row">
+			<label>密码</label>
+			<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+		</div>
+		<div class="mui-input-row">
+			<label>确认</label>
+			<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码">
+		</div>
+		<div class="mui-input-row">
+			<label>手机</label>
+			<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+		</div>
+		<div class="mui-input-row">
+			<label>短信验证码</label>
+			<input id='verify_no' type="number" class="mui-input-clear mui-input" placeholder="请输入短信验证码">
+		</div>
+		<div class="mui-row verification-wrapper">
+			<div class="verification-code-btn" id="verify">获取验证码</div>
+		</div>
+	</form>
+	<div class="mui-content-padded">
+		<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+	</div>
+	<div class="mui-content-padded">
+		<p></p>
+	</div>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+	/*(function($) {
+		$.init();
+	}(mui, document));
+	var jq = jQuery.noConflict();
+	var second = -1;   //倒计时秒数
+
+	//点击“获取验证码”
+	jq('#verify').on('tap', function () {
+		let mobile = jq('#phone').val();
+
+		if (second >= 0) {
+			return;
+		}
+
+		//请求验证码
+		jq.post('/captcha', {mobile: mobile}, function (res) {
+			if (res.code) {
+				jq('#verify').css({'color': "#cccccc", "border-color": "#cccccc"});
+				second = 60;
+				jq('#verify').text(second + 's后重新获取');
+				//开始计时
+				let setInt = setInterval(() => {
+					if (second == 0) {
+						clearInterval(setInt);
+						second = -1;
+						jq('#verify').css({'color': "#007aff", "border-color": "#007aff"});
+						jq('#verify').text('获取验证码');
+						return;
+					}
+					second--;
+					jq('#verify').text(second + 's后重新获取');
+				}, 1000);
+				// mui.msg(res.msg);
+			}
+			mui.alert(res.msg);
+		});
+	});*/
+
+	//注册事件
+	jq('#reg').on('tap', function () {
+		let data = {
+			mobile: jq('#phone').val(),
+			username: jq('#account').val(),
+			password: jq('#password').val(),
+			password_confirm: jq('#password_confirm').val(),
+			code: jq('#verify_no').val()
+		};
+		jq.post('/register',data,function (res) {
+			if (res.code) {
+				window.location.href = res.url;
+				return false;
+			}
+			mui.alert(res.msg);
+		})
+	});
+</script>
+{/block}
